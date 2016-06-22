@@ -25,7 +25,7 @@ item.setAttribute('data-testing', '456')
 item.setAttribute('data-done', '')
 
 // Save Outline
-var endText = taskPaper.serialize()
+var endText = taskPaper.serialize() // Hello world @testing(456) @done
 ```
 
 ## Code Status
