@@ -1,0 +1,10 @@
+spec
+script
+src
+*.coffee
+.npmignore
+.DS_Store
+npm-debug.log
+.travis.yml
+.pairs
+.coffee

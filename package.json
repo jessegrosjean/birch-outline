@@ -1,0 +1,52 @@
+{
+  "name": "birch-outline",
+  "version": "0.1.0",
+  "description": "Outline model layer used by TaskPaper",
+  "main": "./lib/index",
+  "atomTestRunner": "./spec/atomTestRunner",
+  "engines": {
+    "atom": ">=1.0.0 <2.0.0"
+  },
+  "scripts": {
+    "prepublish": "grunt prepublish",
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jesse/birch-outline.git"
+  },
+  "bugs": {
+    "url": "https://github.com/jesse/birch-outline/issues"
+  },
+  "author": "Jesse Grosjean",
+  "license": "MIT",
+  "dependencies": {
+    "event-kit": "^2.0.0",
+    "htmlparser2": "^3.9.1",
+    "moment": "^2.13.0",
+    "underscore-plus": "^1.6.6"
+  },
+  "devDependencies": {
+    "atomdoc-md": "^0.6.7",
+    "chai": "^3.5.0",
+    "coffee-cache": "^0.2.0",
+    "coffee-script": "^1.7.0",
+    "grunt": "^0.4.1",
+    "grunt-cli": "^0.1.8",
+    "grunt-coffeelint": "^0.0.6",
+    "grunt-contrib-coffee": "^0.9.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-exec": "^1.0.0",
+    "grunt-mocha-test": "^0.12.7",
+    "grunt-peg": "^2.0.1",
+    "grunt-shell": "^0.2.2",
+    "grunt-webpack": "^1.0.11",
+    "json-loader": "^0.5.4",
+    "loophole": "^1.1.0",
+    "mocha": "^2.5.3",
+    "rimraf": "^2.2.2",
+    "temp": "^0.6.0",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
