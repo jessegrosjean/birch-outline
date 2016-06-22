@@ -1,15 +1,11 @@
 # Birch Outline
 
-Model layer for an outliner. This model is extracted from [TaskPaper](https://www.taskpaper.com), but it's intended to be generic and suitable for reuse in other outliner projects. It should run in node.js, JavaScriptCore (iOS), and on the web (though needs some trimming for web). I plan to create a Swift wrapper project for use on macOS and iOS.
+Model layer for an outliner. This model is extracted from [TaskPaper](https://www.taskpaper.com), but it is intended to be generic and suitable for reuse in other outliner projects. It should run in node.js, JavaScriptCore (iOS), and on the web. I plan to create a Swift wrapper project for use on macOS and iOS.
 
 ## Features:
 
 1. Model: `Outline` has root `Item` that contains child items and has an `AttributedString` body.
-
-   http://yuml.me/01a4cb7c
-
 2. Runtime: Change events, undo support, query language, date/time parsing.
-
 3. Serialization: Read/Write .taskpaper, .opml, .bml
 
 ## Code Status
@@ -38,4 +34,4 @@ var endText = taskPaper.serialize()
 
 ## Help
 
-Any and all help is appriciated. My goal is to create a clean well tested and documented outliner model that can be used in many projects.
+Any and all help is appreciated. My goal is to create a clean well tested and documented outliner model that can be used in many projects.

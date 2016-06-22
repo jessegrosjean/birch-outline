@@ -10,7 +10,6 @@ Class |  Summary
 <code>[Item](#class-Item)</code> | A paragraph of text in an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.
 <code>[Mutation](#class-Mutation)</code> | A record of a single change in an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.
 <code>[Outline](#class-Outline)</code> | A mutable outline of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.
-<code>[TaskPaperHelper](#class-TaskPaperHelper)</code> | A utility class to easily read/write TaskPapor flavored <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s. 
 
 
 ### <a name="class-AttributedString">AttributedString</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
@@ -2168,66 +2167,6 @@ outline and are reasigned to a new parent item.</p>
       <p>  <em>Returns</em></p>
   <ul>
   <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>.</li>
-  </ul>
-  
-    </td>
-  </tr>
-  
-</table>
-
-<hr/>
-### <a name="class-TaskPaperHelper">TaskPaperHelper</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
-
-<p>A utility class to easily read/write TaskPapor flavored <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s. </p>
-
-
-<table width="100%">
-  <tr>
-    <td colspan="4"><h4>Methods</h4></td>
-  </tr>
-  
-  <tr>
-    <td><code>:: <b>openTaskPaperOutline(</b> taskPaperString <b>)</b></code></td>
-    <td width="8%" align="center"><sub>public</sub></td>
-    <td width="8%" align="center"><sub>class</sub></td>
-    <td width="8%" align="center"><sub><a href="#class-TaskPaperHelper">TaskPaperHelper</a></sub></td>
-  </tr>
-  <tr>
-    <td colspan="4">
-      <ul>
-  <li><code>taskPaperString</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> to parse to create the outline. </li>
-  </ul>
-  
-      <p>The outline is configured to handle TaskPaper content at runtime. For
-  example when you set attributes through the <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> API they are encoded in
-  the item body text as @tags. And when you modify the body text @tags are
-  parsed out and stored as attributes.</p>
-  
-      <p>  <em>Returns</em></p>
-  <ul>
-  <li>Returns an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> created from the passed in <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a>.</li>
-  </ul>
-  
-    </td>
-  </tr>
-  
-  <tr>
-    <td><code>:: <b>serializeOutlineToTaskPaper(</b>  <b>)</b></code></td>
-    <td width="8%" align="center"><sub>public</sub></td>
-    <td width="8%" align="center"><sub>class</sub></td>
-    <td width="8%" align="center"><sub><a href="#class-TaskPaperHelper">TaskPaperHelper</a></sub></td>
-  </tr>
-  <tr>
-    <td colspan="4">
-      <ul>
-  <li><code>outline</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> to serialize. </li>
-  </ul>
-  
-      
-      <p>  <em>Returns</em></p>
-  <ul>
-  <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> created from serializing the given outline to
-  TaskPaper format.</li>
   </ul>
   
     </td>
