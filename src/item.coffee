@@ -823,7 +823,7 @@ class Item
   # - `length` Range length.
   addBodyAttributesInRange: (attributes, location, length) ->
     for eachTagName of attributes
-      assert(eachTagName is eachTagName.toUpperCase(), 'Tag Names Must be Uppercase')
+      assert(eachTagName is eachTagName.toLowerCase(), 'Tag Names Must be Lowercase')
     changedText = @bodyAttributedSubstringFromRange(location, length)
     changedText.addAttributesInRange(attributes, 0, length)
     @replaceBodyRange(location, length, changedText)

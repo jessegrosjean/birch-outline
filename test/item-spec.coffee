@@ -128,30 +128,30 @@ describe 'Item', ->
 
       it 'should add elements', ->
         one.bodyString = 'one two three'
-        one.addBodyAttributeInRange('B', null, 4, 3)
+        one.addBodyAttributeInRange('b', null, 4, 3)
         one.bodyHTMLString.should.equal('one <b>two</b> three')
 
       it 'should add overlapping back element', ->
         one.bodyString = 'one two three'
-        one.addBodyAttributeInRange('B', null, 0, 7)
-        one.addBodyAttributeInRange('I', null, 4, 9)
+        one.addBodyAttributeInRange('b', null, 0, 7)
+        one.addBodyAttributeInRange('i', null, 4, 9)
         one.bodyHTMLString.should.equal('<b>one <i>two</i></b><i> three</i>')
 
       it 'should add overlapping front and back element', ->
         one.bodyString = 'three'
-        one.addBodyAttributeInRange('B', null, 0, 2)
-        one.addBodyAttributeInRange('U', null, 1, 3)
-        one.addBodyAttributeInRange('I', null, 3, 2)
+        one.addBodyAttributeInRange('b', null, 0, 2)
+        one.addBodyAttributeInRange('u', null, 1, 3)
+        one.addBodyAttributeInRange('i', null, 3, 2)
         one.bodyHTMLString.should.equal('<b>t<u>h</u></b><u>r<i>e</i></u><i>e</i>')
 
       it 'should add consecutive attribute with different values', ->
-        one.addBodyAttributeInRange('SPAN', 'data-a': 'a', 0, 1)
-        one.addBodyAttributeInRange('SPAN', 'data-b': 'b', 1, 2)
+        one.addBodyAttributeInRange('span', 'data-a': 'a', 0, 1)
+        one.addBodyAttributeInRange('span', 'data-b': 'b', 1, 2)
         one.bodyHTMLString.should.equal('<span data-a="a">o</span><span data-b="b">ne</span>')
 
       it 'should add consecutive attribute with same values', ->
-        one.addBodyAttributeInRange('SPAN', 'data-a': 'a', 0, 1)
-        one.addBodyAttributeInRange('SPAN', 'data-a': 'a', 1, 2)
+        one.addBodyAttributeInRange('span', 'data-a': 'a', 0, 1)
+        one.addBodyAttributeInRange('span', 'data-a': 'a', 1, 2)
         one.bodyHTMLString.should.equal('<span data-a="a">one</span>')
 
       it 'should remove element', ->

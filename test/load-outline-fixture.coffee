@@ -22,7 +22,7 @@ module.exports = (type) ->
 
   four = outline.createItem('four', '4')
   four.setAttribute('data-t', '')
-  four.addBodyAttributeInRange('B', {}, 2, 1)
+  four.addBodyAttributeInRange('b', {}, 2, 1)
 
   two.appendChildren(four)
 

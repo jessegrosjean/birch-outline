@@ -304,12 +304,12 @@ describe 'AttributedString', ->
         attributedString.toInlineBMLString().should.equal('Hello world!')
 
       it 'should convert to Inline BML with attributes', ->
-        attributedString.addAttributeInRange('B', 'data-my': 'test', 3, 5)
+        attributedString.addAttributeInRange('b', 'data-my': 'test', 3, 5)
         attributedString.toInlineBMLString().should.equal('Hel<b data-my="test">lo wo</b>rld!')
 
       it 'should convert to Inline BML with overlapping attributes', ->
-        attributedString.addAttributeInRange('I', {}, 0, 4)
-        attributedString.addAttributeInRange('B', 'data-my': 'test', 3, 5)
+        attributedString.addAttributeInRange('i', {}, 0, 4)
+        attributedString.addAttributeInRange('b', 'data-my': 'test', 3, 5)
         attributedString.toInlineBMLString().should.equal('<i>Hel<b data-my="test">l</b></i><b data-my="test">o wo</b>rld!')
 
       it 'should convert empty to Inline BML', ->
