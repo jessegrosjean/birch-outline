@@ -1,49 +1,9 @@
 AttributedString = require './attributed-string'
+bmlTags = require './attributed-string-bml-tags'
 ElementType = require 'domelementtype'
 htmlparser = require 'htmlparser2'
-dom = require './dom'
 assert = require 'assert'
-
-InlineBMLTags =
-  # Inline text semantics
-  'a': true
-  'abbr': true
-  'b': true
-  'bdi': true
-  'bdo': true
-  'br': true
-  'cite': true
-  'code': true
-  'data': true
-  'dfn': true
-  'em': true
-  'i': true
-  'kbd': true
-  'mark': true
-  'q': true
-  'rp': true
-  'rt': true
-  'ruby': true
-  's': true
-  'samp': true
-  'small': true
-  'span': true
-  'strong': true
-  'sub': true
-  'sup': true
-  'time': true
-  'u': true
-  'var': true
-  'wbr': true
-
-  # Image & multimedia
-  'audio': true
-  'img': true
-  'video': true
-
-  # Edits
-  'del': true
-  'ins': true
+dom = require './dom'
 
 AttributedString.fromInlineBMLString = (inlineBMLString) ->
   result = null
@@ -75,7 +35,7 @@ AttributedString.validateInlineBML = (inlineBMLContainer) ->
   each = dom.nextNode inlineBMLContainer
   while each isnt end
     if tagName = each.name
-      assert.ok(InlineBMLTags[tagName], "Unexpected tagName '#{tagName}' in 'P'")
+      assert.ok(bmlTags[tagName], "Unexpected tagName '#{tagName}' in 'P'")
     each = dom.nextNode each
 
 addDOMNodeToAttributedString = (node, attributedString) ->
@@ -91,9 +51,9 @@ addDOMNodeToAttributedString = (node, attributedString) ->
       while each
         addDOMNodeToAttributedString(each, attributedString)
         each = each.next
-      if InlineBMLTags[node.name]
+      if bmlTags[node.name]
         attributedString.addAttributeInRange(node.name, node.attribs, tagStart, attributedString.getLength() - tagStart)
-    else if InlineBMLTags[node.name]
+    else if bmlTags[node.name]
       if node.name is 'br'
         lineBreak = new AttributedString(AttributedString.LineSeparatorCharacter)
         lineBreak.addAttributeInRange('br', node.attribs, 0, 1)

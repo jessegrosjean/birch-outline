@@ -1,4 +1,5 @@
 AttributedString = require './attributed-string'
+bmlTags = require './attributed-string-bml-tags'
 ElementType = require 'domelementtype'
 _ = require 'underscore-plus'
 dom = require './dom'
@@ -33,22 +34,30 @@ calculateInitialNodeRanges = (attributedString) ->
     runBuffer = 0
 
     for run in attributedString.getRuns()
-      for tag, tagAttributes of run.attributes
-        nodeRange = tagsToRanges[tag]
+      for attributeName, attributeValue of run.attributes
+        nodeRange = tagsToRanges[attributeName]
         if not nodeRange or nodeRange.end <= runLocation
-          #assert(tag is tag.toUpperCase(), 'Tags Names Must be Uppercase')
 
-          element = dom.createElement(tag)
-          if tagAttributes
-            for attrName, attrValue of tagAttributes
-              element.attribs[attrName] = attrValue
+          # Create element for each attribute name in run. If is known bmlTag
+          # create element directly. Otherwise create span and add the
+          # attribute name/value an attribute on the span.
+          if bmlTags[attributeName]
+            element = dom.createElement(attributeName)
+            if _.isString(attributeValue)
+              element.attribs['value'] = attributeValue
+            else if _.isObject(attributeValue)
+              for attrName, attrValue of attributeValue
+                element.attribs[attrName] = attrValue.toString()
+          else
+            element = dom.createElement('span')
+            element.attribs[attributeName] = attributeValue.toString()
 
           nodeRange =
             node: element
             start: runLocation
-            end: seekTagRangeEnd tag, tagAttributes, runBuffer, runLocation, attributedString
+            end: seekTagRangeEnd attributeName, attributeValue, runBuffer, runLocation, attributedString
 
-          tagsToRanges[tag] = nodeRange
+          tagsToRanges[attributeName] = nodeRange
           nodeRanges.push nodeRange
 
       text = run.getString()
