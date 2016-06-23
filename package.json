@@ -6,6 +6,7 @@
   "atomTestRunner": "./test/atomTestRunner",
   "scripts": {
     "prepublish": "./node_modules/gulp/bin/gulp.js prepublish",
+    "start": "./node_modules/gulp/bin/gulp.js",
     "test": "./node_modules/mocha/bin/mocha"
   },
   "repository": {

@@ -10,4 +10,4 @@ Outline model layer used by [TaskPaper](https://www.taskpaper.com).
 
 Please read [Getting Started](./doc/getting-started.md) to learn more.
 
-Help and suggestions are appriciated.
+[Help and suggestions](./doc/contributing.md) are appriciated.
