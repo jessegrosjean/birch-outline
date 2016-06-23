@@ -30,8 +30,8 @@ var endText = taskPaper.serialize() // Hello world @testing(456) @done
 
 ## Code Status
 
-This is an extraction work in progress. I won't do semantic versioning or publish to NPM until it reaches 1.0. Some of the code is clean and well tested, some not. In particular serialization to `.opml` and `.bml` is not well tested. Let me know what works and what doesn't and we'll get this thing polished.
+The documented API should be pretty solid and stable. Everythign else is supspect and subject to messiness and change. I won't do semantic versioning or publish to NPM until it reaches 1.0. Some of the code is clean and well tested, some not. In particular serialization to `.opml` and `.bml` is not well tested. Let me know what works and what doesn't and we'll get this thing polished.
 
 ## Help
 
-Any and all help is appreciated. My goal is to create a clean well tested and documented outliner model that can be used in many projects.
+Any and all help is appreciated. My goal is to create a good outliner model that can be used in many projects.
