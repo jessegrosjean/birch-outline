@@ -1,7 +1,7 @@
 {
   "name": "birch-outline",
   "version": "0.1.0",
-  "description": "Outline model layer used by TaskPaper",
+  "description": "Cross-platform scripting for TaskPaper",
   "main": "./lib/index",
   "atomTestRunner": "./test/atomTestRunner",
   "scripts": {
