@@ -4,7 +4,7 @@
 
 Outline model layer used by [TaskPaper](https://www.taskpaper.com).
 
-1. **Model:** `Outline` has root `Item` that contains child `Items`, each of which have attributes and an `AttributedString` body.
+1. **Model:** `Outline` contains `Items` each of which has attributes and an `AttributedString` body.
 2. **Runtime:** Change events, undo support, query evaluator, and relative date/time parsing.
 3. **Serialization:** Read/Write .taskpaper, .opml, and .bml
 
