@@ -10,8 +10,11 @@ exec = require('child_process').exec
 
 webpackConfig =
   devtool: 'source-map'
+  entry:
+    'birchoutline': './lib/index.js'
   output:
-    filename: 'birch-outline.js'
+    library: '[name]'
+    filename: '[name].js'
   module:
     loaders: [
       test: /\.json$/,
@@ -20,7 +23,7 @@ webpackConfig =
 
 gulp.task 'clean', ->
   cache.caches = {}
-  gulp.src(['.coffee/', 'lib/', 'doc/', 'min/']).pipe(clean())
+  gulp.src(['.coffee/', 'lib/', 'doc/api.md', 'min/']).pipe(clean())
 
 gulp.task 'test', ->
   gulp.src(['test/**/*-spec.coffee'], read: false)
@@ -45,7 +48,11 @@ gulp.task 'doc', (cb) ->
 
 gulp.task 'webpack', ['javascript', 'coffeescript'], ->
   config = Object.create(webpackConfig)
-  config.plugins = [new webpack.webpack.optimize.UglifyJsPlugin({ compress: warnings: false })]
+  config.plugins = [new webpack.webpack.optimize.UglifyJsPlugin(
+    compress:
+      warnings: false
+    mangle:false
+  )]
   gulp.src('lib/index.js')
     .pipe(webpack(config))
     .pipe(gulp.dest('min/'))
