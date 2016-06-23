@@ -8,6 +8,6 @@ Outline model layer used by [TaskPaper](https://www.taskpaper.com).
 2. **Runtime:** Change events, undo support, query evaluator, and relative date/time parsing.
 3. **Serialization:** Read/Write .taskpaper, .opml, and .bml
 
-Please read [Getting Started](./blob/master/doc/getting-started.md) to learn more.
+Please read [Getting Started](./doc/getting-started.md) to learn more.
 
 Help and suggestions are appriciated.
