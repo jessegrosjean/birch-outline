@@ -4,19 +4,16 @@
   "description": "Outline model layer used by TaskPaper",
   "main": "./lib/index",
   "atomTestRunner": "./spec/atomTestRunner",
-  "engines": {
-    "atom": ">=1.0.0 <2.0.0"
-  },
   "scripts": {
     "prepublish": "grunt prepublish",
     "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/jesse/birch-outline.git"
+    "url": "https://github.com/jessegrosjean/birch-outline"
   },
   "bugs": {
-    "url": "https://github.com/jesse/birch-outline/issues"
+    "url": "https://github.com/jessegrosjean/birch-outline/issues"
   },
   "author": "Jesse Grosjean",
   "license": "MIT",
