@@ -33,15 +33,17 @@ module.exports = (grunt) ->
           level: 'ignore'
 
       src: ['src/**/*.coffee']
-      test: ['spec/**/*.coffee']
+      test: ['test/**/*.coffee']
       gruntfile: ['Gruntfile.coffee']
 
     mochaTest:
       options:
         reporter: 'nyan'
-      src: ['spec/**/*.coffee']
+      src: ['test/**/*.coffee']
 
     exec:
+      test:
+        cmd: "npm test"
       docs:
         cmd: "atomdoc-md generate . -o docs -n api.md"
 
