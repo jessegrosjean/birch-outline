@@ -17,7 +17,6 @@ describe 'TaskPaper', ->
   [outline, root, one, two, three, four, five, six] = []
 
   beforeEach ->
-    debugger
     {outline, root, one, two, three, four, five, six} = loadOutlineFixture(ItemSerializer.TaskPaperType)
 
   afterEach ->

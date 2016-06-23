@@ -1,2 +1,4 @@
 --recursive
+--reporter nyan
+--ui bdd
 --compilers coffee:coffee-script/register
