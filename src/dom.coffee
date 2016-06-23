@@ -15,7 +15,7 @@ parseDOM = (string, options) ->
       xmlMode: true
 
   out = null
-  handler = new htmlparser.DomHandler (error, parsedDOM) =>
+  handler = new htmlparser.DomHandler (error, parsedDOM) ->
     if (error)
       throw error
     else

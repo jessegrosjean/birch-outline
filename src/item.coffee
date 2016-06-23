@@ -670,13 +670,13 @@ class Item
       @setAttribute name, null
 
   @attributeValueStringToObject: (value, clazz) ->
-      switch clazz
-        when Number
-          parseFloat value
-        when Date
-          DateTime.parse(value)
-        else
-          value
+    switch clazz
+      when Number
+        parseFloat value
+      when Date
+        DateTime.parse(value)
+      else
+        value
 
   @objectToAttributeValueString: (object) ->
     if _.isNumber object

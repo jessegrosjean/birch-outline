@@ -22,7 +22,7 @@ class Mutation
   @CHILDREN_CHANGED: 'children'
 
   ###
-  Section: Attributes
+  Section: Attribute
   ###
 
   # Public: Read-only {Item} target of the mutation.
