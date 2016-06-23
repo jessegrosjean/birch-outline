@@ -6,7 +6,7 @@
   "atomTestRunner": "./spec/atomTestRunner",
   "scripts": {
     "prepublish": "grunt prepublish",
-    "test": "grunt test"
+    "test": "node_modules/.bin/mocha"
   },
   "repository": {
     "type": "git",

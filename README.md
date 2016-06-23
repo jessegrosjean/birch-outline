@@ -1,5 +1,7 @@
 # Birch Outline
 
+[![Build Status](https://travis-ci.org/jessegrosjean/birch-outline.svg?branch=master)](https://travis-ci.org/jessegrosjean/birch-outline) [![Dependencies Status](https://david-dm.org/jessegrosjean/birch-outline.svg)](https://david-dm.org/jessegrosjean/birch-outline.svg)
+
 Outline model layer used by [TaskPaper](https://www.taskpaper.com).
 
 ## Features:

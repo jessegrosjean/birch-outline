@@ -1,4 +1,4 @@
-spec
+test
 script
 src
 *.coffee
