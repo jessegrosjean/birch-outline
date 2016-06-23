@@ -42,8 +42,8 @@ module.exports = (grunt) ->
       src: ['spec/**/*.coffee']
 
     exec:
-      docs:
-        cmd: "atomdoc-md generate . -o docs -n api.md"
+      doc:
+        cmd: "./node_modules/atomdoc-md/bin/atomdoc-md.js generate . -o doc -n api.md"
 
     webpack:
       birch:
@@ -72,8 +72,8 @@ module.exports = (grunt) ->
     rimraf = require('rimraf')
     rimraf.sync('lib')
     rimraf.sync('min')
-    rimraf.sync('docs')
+    rimraf.sync('doc')
   grunt.registerTask('lint', ['coffeelint'])
   grunt.registerTask('default', ['lint', 'coffee', 'copy'])
   grunt.registerTask('test', ['lint', 'mochaTest', 'coffee', 'copy'])
-  grunt.registerTask('prepublish', ['clean', 'test', 'webpack', 'exec:docs'])
+  grunt.registerTask('prepublish', ['clean', 'test', 'webpack', 'exec:doc'])

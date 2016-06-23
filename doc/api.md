@@ -6,10 +6,10 @@ Class |  Summary
 ------| ------------
 <code>[AttributedString](#class-AttributedString)</code> | A container holding both characters and associated attributes.
 <code>[DateTime](#class-DateTime)</code> | Date and time parsing and conversion. 
-<code>[ItemSerializer](#class-ItemSerializer)</code> | A class for serializing and deserializing <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. 
-<code>[Item](#class-Item)</code> | A paragraph of text in an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.
-<code>[Mutation](#class-Mutation)</code> | A record of a single change in an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.
-<code>[Outline](#class-Outline)</code> | A mutable outline of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.
+<code>[ItemSerializer](#class-ItemSerializer)</code> | A class for serializing and deserializing <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. 
+<code>[Item](#class-Item)</code> | A paragraph of text in an <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.
+<code>[Mutation](#class-Mutation)</code> | A record of a single change in an <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.
+<code>[Outline](#class-Outline)</code> | A mutable outline of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.
 
 
 ### <a name="class-AttributedString">AttributedString</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
@@ -280,7 +280,7 @@ Class |  Summary
       
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> object consisting of the characters
+  <li>Returns an <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> object consisting of the characters
   and attributes within a given range in the receiver.</li>
   </ul>
   
@@ -367,7 +367,7 @@ Class |  Summary
 <hr/>
 ### <a name="class-ItemSerializer">ItemSerializer</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
 
-<p>A class for serializing and deserializing <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
+<p>A class for serializing and deserializing <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
 
 
 <table width="100%">
@@ -469,7 +469,7 @@ Class |  Summary
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>items</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> to serialize.</li>
+  <li><code>items</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> to serialize.</li>
   <li><code>mimeType</code> Supported serialization format. </li>
   </ul>
   
@@ -489,7 +489,7 @@ Class |  Summary
     <td colspan="4">
       <ul>
   <li><code>itemsData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> to deserialize.</li>
-  <li><code>outline</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> to use when creating deserialized items.</li>
+  <li><code>outline</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> to use when creating deserialized items.</li>
   <li><code>mimeType</code> Format to deserialize.</li>
   </ul>
   
@@ -508,17 +508,17 @@ Class |  Summary
 <hr/>
 ### <a name="class-Item">Item</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
 
-<p>A paragraph of text in an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.</p>
+<p>A paragraph of text in an <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.</p>
 <p>Items cannot be created directly. Use {Outline::createItem} to create items.</p>
 <p>Items may contain other child items to form a hierarchy. When you move an
 item its children move with it. See the &quot;Structure&quot; and &quot;Mutate Structure&quot;
 sections for associated APIs. To move an item while leaving it&#39;s children in
-place see the methods in <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s &quot;Insert &amp; Remove Items&quot;.</p>
+place see the methods in <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s &quot;Insert &amp; Remove Items&quot;.</p>
 <p>Items may have associated attributes. You can add your own attributes by
 using the APIs described in the &quot;Item Attributes&quot; section. For example you might
 add a due date using the <code>data-due-date</code> attribute.</p>
 <p>Items have an associated paragraph of body text. You can access it as plain
-text or as an immutable <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>. You can also add and remove
+text or as an immutable <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>. You can also add and remove
 attributes from ranges of body text. See &quot;Item Body Text&quot; for associated
 APIs. While you can add these attributes at runtime, TaskPaper won&#39;t save
 them to disk since it saved in plain text without associated text run
@@ -551,7 +551,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> that this item belongs to. </p>
+      <p>Read-only <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> that this item belongs to. </p>
   
     </td>
   </tr>
@@ -564,7 +564,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only true if item is contained by root of owning <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </p>
+      <p>Read-only true if item is contained by root of owning <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </p>
   
     </td>
   </tr>
@@ -577,7 +577,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only true if is {::outline} root <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only true if is {::outline} root <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -590,7 +590,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only depth of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in outline structure. Calculated by
+      <p>Read-only depth of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in outline structure. Calculated by
   summing the {Item::indent} of this item and it&#39;s ancestors. </p>
   
     </td>
@@ -604,7 +604,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only parent <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only parent <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -617,7 +617,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only first child <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only first child <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -630,7 +630,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only last child <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only last child <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -643,7 +643,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only previous sibling <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only previous sibling <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -656,7 +656,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only next sibling <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only next sibling <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -669,7 +669,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only previous branch <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only previous branch <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -682,7 +682,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only next branch <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only next branch <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -695,7 +695,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of ancestor <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of ancestor <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
   
     </td>
   </tr>
@@ -708,7 +708,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of descendant <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of descendant <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
   
     </td>
   </tr>
@@ -721,7 +721,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only last descendant <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+      <p>Read-only last descendant <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -734,7 +734,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of this <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> and its descendants. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of this <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> and its descendants. </p>
   
     </td>
   </tr>
@@ -747,7 +747,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Last <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in branch rooted at this item. </p>
+      <p>Last <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in branch rooted at this item. </p>
   
     </td>
   </tr>
@@ -760,7 +760,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only previous <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in the outline. </p>
+      <p>Read-only previous <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in the outline. </p>
   
     </td>
   </tr>
@@ -773,7 +773,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only next <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in the outline. </p>
+      <p>Read-only next <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in the outline. </p>
   
     </td>
   </tr>
@@ -799,7 +799,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s. </p>
   
     </td>
   </tr>
@@ -812,7 +812,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Visual indent of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> relative to parent. Normally this will be
+      <p>Visual indent of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> relative to parent. Normally this will be
   1 for children with a parent as they are indented one level beyond there
   parent. But items can be visually over-indented in which case this value
   would be greater then 1. </p>
@@ -829,7 +829,7 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <p>Read-only key/value object of the attributes associated with this
-  <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
+  <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>. </p>
   
     </td>
   </tr>
@@ -842,7 +842,7 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of this <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>&#39;s attribute names. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of this <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>&#39;s attribute names. </p>
   
     </td>
   </tr>
@@ -883,10 +883,10 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Body text as immutable <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>. Do not modify this
+      <p>Body text as immutable <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>. Do not modify this
   AttributedString, instead use the other methods in this &quot;Body Text&quot;
   section. They will both modify the string and create the appropriate
-  <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> events needed to keep the outline valid. </p>
+  <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> events needed to keep the outline valid. </p>
   
     </td>
   </tr>
@@ -899,12 +899,12 @@ attributes.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Syntax highlighted body text as immutable <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>.
+      <p>Syntax highlighted body text as immutable <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>.
   Unlike <code>bodyAttributedString</code> this string contains attributes created by
   syntax highlighting such as tag name and value ranges.</p>
   <p>Do not modify this AttributedString, instead use the other methods in this
   &quot;Body Text&quot; section. They will both modify the string and create the
-  appropriate <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> events needed to keep the outline valid. </p>
+  appropriate <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> events needed to keep the outline valid. </p>
   
     </td>
   </tr>
@@ -925,7 +925,7 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>items</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</li>
+  <li><code>items</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</li>
   </ul>
   
       <p>Given an array of items determines and returns the common
@@ -933,7 +933,7 @@ attributes.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of common ancestor <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</li>
+  <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of common ancestor <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</li>
   </ul>
   
     </td>
@@ -955,7 +955,7 @@ attributes.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns a duplicate <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> with a new {::id}.</li>
+  <li>Returns a duplicate <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> with a new {::id}.</li>
   </ul>
   
     </td>
@@ -970,7 +970,7 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>item</code> The <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to check for containment.</li>
+  <li><code>item</code> The <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to check for containment.</li>
   </ul>
   
       <p>Determines if this item contains the given item.</p>
@@ -992,8 +992,8 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>children</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to insert.</li>
-  <li><code>referenceSibling</code> The referenced sibling <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to insert before. </li>
+  <li><code>children</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to insert.</li>
+  <li><code>referenceSibling</code> The referenced sibling <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to insert before. </li>
   </ul>
   
       <p>Insert the new children before the referenced sibling in this
@@ -1014,7 +1014,7 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>children</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to append. </li>
+  <li><code>children</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to append. </li>
   </ul>
   
       <p>Append the new children to this item&#39;s list of children.</p>
@@ -1032,7 +1032,7 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>children</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to remove. </li>
+  <li><code>children</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to remove. </li>
   </ul>
   
       <p>Remove the children from this item&#39;s list of children. When an
@@ -1272,7 +1272,7 @@ attributes.</p>
       <ul>
   <li><code>location</code> Start character index.</li>
   <li><code>length</code> Range length.</li>
-  <li><code>insertedText</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> or <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> </li>
+  <li><code>insertedText</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> or <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> </li>
   </ul>
   
       <p>Replace body text in the given range.</p>
@@ -1290,7 +1290,7 @@ attributes.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>text</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> or <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> </li>
+  <li><code>text</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> or <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> </li>
   </ul>
   
       <p>Append body text.</p>
@@ -1340,7 +1340,7 @@ attributes.</p>
 <hr/>
 ### <a name="class-Mutation">Mutation</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
 
-<p>A record of a single change in an <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.</p>
+<p>A record of a single change in an <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.</p>
 <p>A new mutation is created to record each attribute set, body text change,
 and child item update. Use {Outline::onDidChange} to receive this mutation
 record so you can track what changes as an outline is edited. </p>
@@ -1398,7 +1398,7 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> target of the mutation. </p>
+      <p>Read-only <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> target of the mutation. </p>
   
     </td>
   </tr>
@@ -1425,7 +1425,7 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only name of changed attribute in the target <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
+      <p>Read-only name of changed attribute in the target <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
   
     </td>
   </tr>
@@ -1439,7 +1439,7 @@ record so you can track what changes as an outline is edited. </p>
   <tr>
     <td colspan="4">
       <p>Read-only previous value of changed attribute in the target
-  <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
+  <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
   
     </td>
   </tr>
@@ -1453,7 +1453,7 @@ record so you can track what changes as an outline is edited. </p>
   <tr>
     <td colspan="4">
       <p>Read-only value of the body text location where the insert started
-  in the target <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
+  in the target <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
   
     </td>
   </tr>
@@ -1467,7 +1467,7 @@ record so you can track what changes as an outline is edited. </p>
   <tr>
     <td colspan="4">
       <p>Read-only value of length of the inserted body text in the target
-  <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
+  <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
   
     </td>
   </tr>
@@ -1480,8 +1480,8 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> of replaced body text in the target
-  <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
+      <p>Read-only <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a> of replaced body text in the target
+  <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>, or null. </p>
   
     </td>
   </tr>
@@ -1494,7 +1494,7 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s added to the target. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s added to the target. </p>
   
     </td>
   </tr>
@@ -1507,7 +1507,7 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s removed from the target. </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of child <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s removed from the target. </p>
   
     </td>
   </tr>
@@ -1520,7 +1520,7 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only previous sibling <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> of the added or removed Items,
+      <p>Read-only previous sibling <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> of the added or removed Items,
   or null. </p>
   
     </td>
@@ -1534,7 +1534,7 @@ record so you can track what changes as an outline is edited. </p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only next sibling <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> of the added or removed Items, or
+      <p>Read-only next sibling <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> of the added or removed Items, or
   null. </p>
   
     </td>
@@ -1548,7 +1548,7 @@ record so you can track what changes as an outline is edited. </p>
 <hr/>
 ### <a name="class-Outline">Outline</a><b><sub><sup><code>CLASS </code></sup></sub></b><a href="#classes"><img src="https://rawgit.com/venkatperi/atomdoc-md/master/assets/octicons/arrow-up.svg" alt="Back to Class List" height= "18px"></a>
 
-<p>A mutable outline of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</p>
+<p>A mutable outline of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</p>
 <p>Use outlines to create new items, find existing items, watch for changes
 in items, and add/remove items.</p>
 <p>When you add/remove items using the outline&#39;s methods the items children are
@@ -1582,7 +1582,7 @@ outline and are reasigned to a new parent item.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only root <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in the outline. </p>
+      <p>Read-only root <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> in the outline. </p>
   
     </td>
   </tr>
@@ -1595,7 +1595,7 @@ outline and are reasigned to a new parent item.</p>
       </tr>
   <tr>
     <td colspan="4">
-      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in the outline (except the root). </p>
+      <p>Read-only <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in the outline (except the root). </p>
   
     </td>
   </tr>
@@ -1633,13 +1633,13 @@ outline and are reasigned to a new parent item.</p>
   </ul>
   
       <p>The outline is configured to handle TaskPaper content at runtime. For
-  example when you set attributes through the <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> API they are encoded in
+  example when you set attributes through the <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> API they are encoded in
   the item body text as @tags. And when you modify the body text @tags are
   parsed out and stored as attributes.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns a TaskPaper <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.</li>
+  <li>Returns a TaskPaper <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>.</li>
   </ul>
   
     </td>
@@ -1654,11 +1654,11 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       
-      <p>Retrieves all open <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s.</p>
+      <p>Retrieves all open <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s.</li>
+  <li>Returns an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>s.</li>
   </ul>
   
     </td>
@@ -1679,7 +1679,7 @@ outline and are reasigned to a new parent item.</p>
       
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns existing <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> with the given outline id.</li>
+  <li>Returns existing <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> with the given outline id.</li>
   </ul>
   
     </td>
@@ -1737,7 +1737,7 @@ outline and are reasigned to a new parent item.</p>
     <td colspan="4">
       <ul>
   <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> to be called when the outline will change.<ul>
-  <li><code>mutation</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> describing the change.</li>
+  <li><code>mutation</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> describing the change.</li>
   </ul>
   </li>
   </ul>
@@ -1762,13 +1762,13 @@ outline and are reasigned to a new parent item.</p>
     <td colspan="4">
       <ul>
   <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> to be called when the outline changes.<ul>
-  <li><code>mutation</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> describing the changes.</li>
+  <li><code>mutation</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a> describing the changes.</li>
   </ul>
   </li>
   </ul>
   
       <p>Invoke the given callback when the outline changes.</p>
-  <p>See <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> Examples for an example of subscribing to this event.</p>
+  <p>See <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a> Examples for an example of subscribing to this event.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
@@ -1788,7 +1788,7 @@ outline and are reasigned to a new parent item.</p>
     <td colspan="4">
       <ul>
   <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> to be called when the outline ends updating.<ul>
-  <li><code>changes</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a>s.</li>
+  <li><code>changes</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/mutation.coffee#L9">Mutation</a>s.</li>
   </ul>
   </li>
   </ul>
@@ -1866,7 +1866,7 @@ outline and are reasigned to a new parent item.</p>
       
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> for given id.</li>
+  <li>Returns <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> for given id.</li>
   </ul>
   
     </td>
@@ -1890,7 +1890,7 @@ outline and are reasigned to a new parent item.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of matching <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</li>
+  <li>Returns an <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of matching <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s.</li>
   </ul>
   
     </td>
@@ -1905,7 +1905,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>text</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> or <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>. </li>
+  <li><code>text</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> or <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/attributed-string.coffee#L20">AttributedString</a>. </li>
   </ul>
   
       <p>Create a new item. The new item is owned by this outline, but is
@@ -1924,7 +1924,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>item</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to clone.</li>
+  <li><code>item</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to clone.</li>
   <li><code>deep</code> defaults to true.</li>
   </ul>
   
@@ -1933,7 +1933,7 @@ outline and are reasigned to a new parent item.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns Clone of the given <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.</li>
+  <li>Returns Clone of the given <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>.</li>
   </ul>
   
     </td>
@@ -1948,16 +1948,16 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>item</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to import.</li>
+  <li><code>item</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to import.</li>
   <li><code>deep</code> defaults to true.</li>
   </ul>
   
-      <p>Creates a clone of the given <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> from an external outline that
+      <p>Creates a clone of the given <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> from an external outline that
   can be inserted into the current outline.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
-  <li>Returns <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> clone.</li>
+  <li>Returns <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> clone.</li>
   </ul>
   
     </td>
@@ -1972,8 +1972,8 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>items</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to insert.</li>
-  <li><code>referenceItem</code> Reference <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to insert before. </li>
+  <li><code>items</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s to insert.</li>
+  <li><code>referenceItem</code> Reference <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> to insert before. </li>
   </ul>
   
       <p>Insert the items before the given <code>referenceItem</code>. If the
@@ -1996,7 +1996,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>items</code> <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> to remove. </li>
+  <li><code>items</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> or <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> to remove. </li>
   </ul>
   
       <p>Remove the items but leave their child items in the outline and
@@ -2015,7 +2015,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>callback</code> Callback that contains code to change <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in this <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </li>
+  <li><code>callback</code> Callback that contains code to change <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in this <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </li>
   </ul>
   
       <p>Group changes to the outline for better performance.</p>
@@ -2033,7 +2033,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>callback</code> Callback that contains code to change <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in this <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </li>
+  <li><code>callback</code> Callback that contains code to change <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in this <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </li>
   </ul>
   
       <p>Group multiple changes into a single undo group.</p>
@@ -2051,7 +2051,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>callback</code> Callback that contains code to change <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in this <a href="https://github.com/jesse/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </li>
+  <li><code>callback</code> Callback that contains code to change <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a>s in this <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L57">Outline</a>. </li>
   </ul>
   
       <p>Group multiple changes into a single undo and change
