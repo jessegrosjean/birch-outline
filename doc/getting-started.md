@@ -71,4 +71,4 @@ You can also use `birch-outline` on a webpage. You can find `birchoutline.js` in
 </html>
 ```
 
-Learn more in the [API Docs](./api). The documented API is relatively stable and tested. Everything else is suspect, but if you see something you'd like to use let me know and we can get it tested and documented.
+Learn more in the [API Docs](./api.md). The documented API is relatively stable and tested. Everything else is suspect, but if you see something you'd like to use let me know and we can get it tested and documented.
