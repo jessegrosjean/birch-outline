@@ -1,0 +1,2 @@
+--recursive
+--compilers coffee:coffee-script/register
