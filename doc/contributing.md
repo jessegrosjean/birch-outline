@@ -2,37 +2,39 @@
 
 My goal is to make it easy to work with TaskPaper files. My large goal is to provide a good outliner runtime that can be used in many projects. Any help or suggestions is appriciated.
 
-## Development Process
+## Build Process
 
 The build process is:
 
-1. `clean`, `lint`
-2. All tests in `test` are run
-3. Scripts in `src` are processed and copied to `lib`
-4. Scripts in `lib` are bundles and saved into `min`
+1. Clean the project and lint the sources
+2. Run all tests `test`
+3. Process and copy all scripts in `src` to `lib`
+4. Bundle scripts in `lib` into `birchoutline.js` in `min`
 
-To do a full build use:
+To do a full build:
 
 ```shell
 npm prepublish
 ```
 
-To do a "watch" build where it automatically builds when you save a source file use:
+To do a _watch_ build that automatically rebuilds when you modify a source:
 
 ```shell
 npm start
 ```
 
-The project is also setup so that if you open it in [Atom](http://atom.io) you can run the tests there where you can use Chrome's debugger. To run tests in Atom:
+## Debugging Tests
+
+You can run test in [Atom](http://atom.io) and use Chrome's debugger:
 
 1. Open `birch-outline` in Atom
-2. View > Developer > Run Package Specs
-3. Option-Command-I to bring up debugger.
-4. Command-R to rerun.
+2. Choose the View > Developer > Run Package Specs menu
+3. Option-Command-I to bring up debugger
+4. Command-R to rerun tests
 
 ## Project Ideas
 
-There are some ideas that I think would be neat, but that I don't have time to work on myself:
+There are some ideas that I think would be neat:
 
 1. Create a command line interace for processing TaskPaper files. For exmaple make it easy to run an `ItemPath` queries on a file and return the results.
 

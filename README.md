@@ -9,5 +9,3 @@ Outline model layer used by [TaskPaper](https://www.taskpaper.com).
 3. **Serialization:** Read/Write .taskpaper, .opml, and .bml
 
 Please read [Getting Started](./doc/getting-started.md) to learn more.
-
-[Help and suggestions](./doc/contributing.md) are appriciated.
