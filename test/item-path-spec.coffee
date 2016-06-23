@@ -40,9 +40,7 @@ describe 'ItemPath', ->
 
   describe 'Set Grouping', ->
     it 'should group path set operations with parentheses', ->
-      console.profile('Parse Path')
       outline.evaluateItemPath('(//one union //two union //three except //two)').should.eql [one, two, three]
-      console.profileEnd()
       outline.evaluateItemPath('((//one union //two union //three) except //two)').should.eql [one, three]
 
     it 'should allow slicing after set group', ->
