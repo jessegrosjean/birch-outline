@@ -1,8 +1,7 @@
 # Getting Started
 
 1. Install [Node.js](http://nodejs.org)
-
-2. Clone and build Birch-Outline
+2. Clone and build `birch-outline`
 
 ```shell
 git clone https://github.com/jessegrosjean/birch-outline.git
@@ -10,7 +9,9 @@ cd birch-outline
 npm install
 ```
 
-You now have `birch-outline` built and ready to use or hack on. The fasted way to get something running is to use the node REPL like this:
+You now have `birch-outline` built and ready to use or hack on.
+
+The [documented API](./api.md), is relativly stable. The fasted way to try it out is to use the node REPL:
 
 ```shell
 cd..
@@ -20,7 +21,7 @@ node # Start node REPL
 > outline.serialize() # Serialize outline back to string
 ```
 
-You can also use `birch-outline` on a webpage. You can find `birchoutline.js` in `birch-outline/min` and then include that on your web page. Here's an example that builds a nested `UL` from a birch outline:
+You can also use `birch-outline` on a webpage. This example builds a nested `UL`:
 
 
 ```html
@@ -28,7 +29,7 @@ You can also use `birch-outline` on a webpage. You can find `birchoutline.js` in
 <html>
   <head>
     <title>Test Birch</title>
-    <script src="./min/birchoutline.js" type="text/javascript"></script>
+    <script src="./birch-outline/min/birchoutline.js" type="text/javascript"></script>
     <style type="text/css">
       li[data-type="project"] > p { font-weight: bold; }
       li[data-type="note"] > p { font-style: italic; color: grey; }
@@ -70,5 +71,3 @@ You can also use `birch-outline` on a webpage. You can find `birchoutline.js` in
   </body>
 </html>
 ```
-
-Learn more in the [API Docs](./api.md). The documented API is relatively stable and tested. Everything else is suspect, but if you see something you'd like to use let me know and we can get it tested and documented.
