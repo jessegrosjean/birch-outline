@@ -1,8 +1,8 @@
 # Contributing
 
-My goal is to make it easy to work with TaskPaper files. My large goal is to provide a good outliner runtime that can be used in many projects. Any help or suggestions is appreciated.
+I hope birch-outline can be useful for many different outliner projects. Please check out the code and help me make it even better.
 
-## Build Process
+## Building
 
 The build process is:
 
@@ -23,7 +23,7 @@ To do a _watch_ build that automatically rebuilds when you modify a source:
 npm start
 ```
 
-## Debugging Tests
+## Debugging
 
 You can run test in [Atom](http://atom.io) and use Chrome's debugger:
 

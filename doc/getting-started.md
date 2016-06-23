@@ -9,11 +9,11 @@ cd birch-outline
 npm install
 ```
 
-You now have `birch-outline` built and ready to use. The [documented API](./api.md) is relatively stable. Everything else is suspect. If you want to make an improvement please read the [Contributing](./contributing.md) guide.
+The [documented API](./api.md) is relatively stable. Read read the [Contributing](./contributing.md) guide to make improvements.
 
-## Node REPL
+## Node
 
-The fasted way to start is through the node REPL:
+Load `birch-outline` into a Node REPL session:
 
 ```shell
 node # Start node REPL in birch-outline folder
@@ -24,9 +24,9 @@ node # Start node REPL in birch-outline folder
 > outline.serialize() # Serialize outline back to string
 ```
 
-## On a Webpage
+## Webpage
 
-Include the script `birch-outline/min/birchoutline.js` for webpages. This example builds a nested `UL` from an Outline:
+Use `birch-outline/min/birchoutline.js` for webpages. This example builds a nested `UL` from a TaskPaper outline:
 
 
 ```html
