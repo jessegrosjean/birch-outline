@@ -8,4 +8,6 @@ Outline model layer used by [TaskPaper](https://www.taskpaper.com).
 2. **Runtime:** Change events, undo support, query evaluator, and relative date/time parsing.
 3. **Serialization:** Read/Write .taskpaper, .opml, and .bml
 
+Suitable for processing TaskPaper files anywhere where there's JavaScript. Potentially useful as a base to build off when creating alternative outlining apps.
+
 Please read [Getting Started](./doc/getting-started.md) to learn more.

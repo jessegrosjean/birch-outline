@@ -1,6 +1,6 @@
 # Contributing
 
-My goal is to make it easy to work with TaskPaper files. My large goal is to provide a good outliner runtime that can be used in many projects. Any help or suggestions is appriciated.
+My goal is to make it easy to work with TaskPaper files. My large goal is to provide a good outliner runtime that can be used in many projects. Any help or suggestions is appreciated.
 
 ## Build Process
 
@@ -36,6 +36,6 @@ You can run test in [Atom](http://atom.io) and use Chrome's debugger:
 
 There are some ideas that I think would be neat:
 
-1. Create a command line interace for processing TaskPaper files. For exmaple make it easy to run an `ItemPath` queries on a file and return the results.
+1. Create a command line interface for processing TaskPaper files. For example make it easy to run an `ItemPath` queries on a file and return the results.
 
 2. Create a webpage for displaying TaskPaper outlines. Matt Gemmell has a [great start](https://github.com/mattgemmell/TaskPaperRuby) but I think using `birch-outline` can make it easier to implement and with more features. For example the published outline could be filtered dynamically in the web page using `ItemPath` queries.

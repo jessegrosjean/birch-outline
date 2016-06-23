@@ -9,7 +9,7 @@ cd birch-outline
 npm install
 ```
 
-You now have `birch-outline` built and ready to use. The [documented API](./api.md) is relativly stable. Everything else is suspect. If you want to make an improvement please read the [Contributing](./contributing.md) guide.
+You now have `birch-outline` built and ready to use. The [documented API](./api.md) is relatively stable. Everything else is suspect. If you want to make an improvement please read the [Contributing](./contributing.md) guide.
 
 ## Node REPL
 
