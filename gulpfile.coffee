@@ -1,25 +1,13 @@
 gulp = require 'gulp'
 gutil = require 'gulp-util'
+clean = require 'gulp-clean'
 mocha = require 'gulp-mocha'
+cache = require 'gulp-cached'
 coffee = require 'gulp-coffee'
 webpack = require 'webpack-stream'
-coffeelint = require 'gulp-coffeelint'
-cache = require 'gulp-cached'
-clean = require 'gulp-clean'
 exec = require('child_process').exec
-
-webpackConfig =
-  devtool: 'source-map'
-  entry:
-    'birchoutline': './lib/index.js'
-  output:
-    library: '[name]'
-    filename: '[name].js'
-  module:
-    loaders: [
-      test: /\.json$/,
-      loader: "json-loader"
-    ],
+coffeelint = require 'gulp-coffeelint'
+webpackConfig = require './webpack.config'
 
 gulp.task 'clean', ->
   cache.caches = {}
@@ -47,19 +35,14 @@ gulp.task 'doc', (cb) ->
     cb(err)
 
 gulp.task 'webpack', ['javascript', 'coffeescript'], ->
-  config = Object.create(webpackConfig)
-  config.plugins = [new webpack.webpack.optimize.UglifyJsPlugin(
-    compress:
-      warnings: false
-    mangle:false
-  )]
   gulp.src('lib/index.js')
-    .pipe(webpack(config))
+    .pipe(webpack(webpackConfig))
     .pipe(gulp.dest('min/'))
 
 gulp.task 'webpack:watch', ['javascript', 'coffeescript'], ->
   config = Object.create(webpackConfig)
   config.watch = true
+  config.plugins = [] # remove uglify
   gulp.src('lib/index.js')
     .pipe(webpack(config))
     .pipe(gulp.dest('min/'))
