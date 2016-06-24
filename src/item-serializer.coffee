@@ -1,4 +1,3 @@
-urls = require './urls'
 path = require 'path'
 
 # Public: A class for serializing and deserializing {Item}s.
