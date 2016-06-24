@@ -1,6 +1,6 @@
 Span = require '../span-buffer/span'
 _ = require 'underscore-plus'
-assert = require 'assert'
+{ assert } = require '../util'
 
 # Still trying to figure this out. Isn't really an issue for TaskPaper format,
 # but becomes an issue when serializaing to HTML. Question... how do you map
@@ -8,14 +8,14 @@ assert = require 'assert'
 # that case? Maybe should make that translation immediatly... not sure! :)
 validateAttributes = (attributes) ->
   for attribute, value of attributes
-    assert.ok(_.isString(attribute), "Expected #{attribute} to be string")
+    assert(_.isString(attribute), "Expected #{attribute} to be string")
     if value
       if _.isObject(value)
         for attribute, value of value
-          assert.ok(_.isString(attribute), "Expected #{attribute} to be string")
-          assert.ok(_.isString(value), "Expected #{value} to be string")
+          assert(_.isString(attribute), "Expected #{attribute} to be string")
+          assert(_.isString(value), "Expected #{value} to be string")
       else
-        assert.ok(_.isString(value), "Expected #{value} to be string")
+        assert(_.isString(value), "Expected #{value} to be string")
 
 class RunSpan extends Span
 

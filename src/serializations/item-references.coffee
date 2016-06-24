@@ -1,5 +1,4 @@
 _ = require 'underscore-plus'
-assert = require 'assert'
 Item = require '../item'
 
 ###

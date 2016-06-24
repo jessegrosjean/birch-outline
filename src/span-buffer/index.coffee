@@ -1,7 +1,7 @@
 SpanBranch = require './span-branch'
 SpanLeaf = require './span-leaf'
 {Emitter} = require 'event-kit'
-assert = require 'assert'
+{ assert } = require '../util'
 Span = require './span'
 
 class SpanBuffer extends SpanBranch

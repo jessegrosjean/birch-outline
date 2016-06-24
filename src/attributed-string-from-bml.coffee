@@ -2,7 +2,7 @@ AttributedString = require './attributed-string'
 bmlTags = require './attributed-string-bml-tags'
 ElementType = require 'domelementtype'
 htmlparser = require 'htmlparser2'
-assert = require 'assert'
+{ assert } = require './util'
 dom = require './dom'
 
 AttributedString.fromInlineBMLString = (inlineBMLString) ->
@@ -35,7 +35,7 @@ AttributedString.validateInlineBML = (inlineBMLContainer) ->
   each = dom.nextNode inlineBMLContainer
   while each isnt end
     if tagName = each.name
-      assert.ok(bmlTags[tagName], "Unexpected tagName '#{tagName}' in 'P'")
+      assert(bmlTags[tagName], "Unexpected tagName '#{tagName}' in 'P'")
     each = dom.nextNode each
 
 addDOMNodeToAttributedString = (node, attributedString) ->

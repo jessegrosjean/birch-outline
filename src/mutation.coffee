@@ -1,4 +1,6 @@
-assert = require 'assert'
+{ assert } = require './util'
+
+{ assert } = require './util'
 
 # Public: A record of a single change in an {Item}.
 #
@@ -66,15 +68,15 @@ class Mutation
   nextSibling: null
 
   @createAttributeMutation: (target, attributeName, attributeOldValue) ->
-    assert.ok(attributeName, 'Expect valid attribute name')
+    assert(attributeName, 'Expect valid attribute name')
     mutation = new Mutation target, Mutation.ATTRIBUTE_CHANGED
     mutation.attributeName = attributeName
     mutation.attributeOldValue = attributeOldValue
     mutation
 
   @createBodyMutation: (target, insertedTextLocation, insertedTextLength, replacedText) ->
-    assert.ok(insertedTextLocation?, 'Expect valid insertedTextLocation')
-    assert.ok(insertedTextLength?, 'Expect valid insertedTextLength')
+    assert(insertedTextLocation?, 'Expect valid insertedTextLocation')
+    assert(insertedTextLength?, 'Expect valid insertedTextLength')
     mutation = new Mutation target, Mutation.BODY_CHANGED
     mutation.insertedTextLocation = insertedTextLocation
     mutation.insertedTextLength = insertedTextLength
@@ -82,7 +84,7 @@ class Mutation
     mutation
 
   @createChildrenMutation: (target, addedItems, removedItems, previousSibling, nextSibling) ->
-    assert.ok(addedItems.length > 0 or removedItems.length > 0, 'Children added or removed')
+    assert(addedItems.length > 0 or removedItems.length > 0, 'Children added or removed')
     mutation = new Mutation target, Mutation.CHILDREN_CHANGED
     mutation.addedItems = addedItems or []
     mutation.removedItems = removedItems or []

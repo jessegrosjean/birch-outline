@@ -1,8 +1,8 @@
 htmlparser = require 'htmlparser2'
+{ assert } = require '../util'
 _ = require 'underscore-plus'
-dom = require '../dom'
-assert = require 'assert'
 Item = require '../item'
+dom = require '../dom'
 
 ###
 Serialization
@@ -76,7 +76,7 @@ deserializeItems = (opmlString, outline, options) ->
     throw new Error('Could not find <body> element.')
 
 createItem = (outline, outlineElement, depth, flatItems, remapIDCallback) ->
-  assert.ok(outlineElement.name is 'outline', "Expected OUTLINE element but got #{outlineElement.tagName}")
+  assert(outlineElement.name is 'outline', "Expected OUTLINE element but got #{outlineElement.tagName}")
   item = outline.createItem('', outlineElement.attribs['id'])
   item.bodyHTMLString = outlineElement.attribs['text'] or ''
 

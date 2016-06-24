@@ -1,9 +1,9 @@
 AttributedString = require '../attributed-string'
 ElementType = require 'domelementtype'
-dom = require '../dom'
+{ assert } = require '../util'
 Birch = require '../birch'
-assert = require 'assert'
 Item = require '../item'
+dom = require '../dom'
 
 ###
 Serialization
@@ -115,17 +115,17 @@ createItem = (outline, liOrRootUL, depth, flatItems, remapIDCallback) ->
     pOrUL = dom.lastChild(liOrRootUL)
     pTagName = p?.name
     pOrULTagName = pOrUL?.name
-    assert.ok(pTagName is 'p', "Expected 'P', but got #{pTagName}")
+    assert(pTagName is 'p', "Expected 'P', but got #{pTagName}")
     if pTagName is pOrULTagName
-      assert.ok(pOrUL is p, "Expect single 'P' child in 'LI'")
+      assert(pOrUL is p, "Expect single 'P' child in 'LI'")
     else
-      assert.ok(pOrULTagName is 'ul', "Expected 'UL', but got #{pOrULTagName}")
-      assert.ok(pOrUL.prev is p, "Expected previous sibling of 'UL' to be 'P'")
+      assert(pOrULTagName is 'ul', "Expected 'UL', but got #{pOrULTagName}")
+      assert(pOrUL.prev is p, "Expected previous sibling of 'UL' to be 'P'")
     AttributedString.validateInlineBML(p)
   else if tagName is 'ul'
-    assert.ok(liOrRootUL.id is Birch.RootID)
+    assert(liOrRootUL.id is Birch.RootID)
   else
-    assert.ok(false, "Expected 'LI' or 'UL', but got #{tagName}")
+    assert(false, "Expected 'LI' or 'UL', but got #{tagName}")
 
   P = dom.firstChild(liOrRootUL)
   UL = dom.lastChild(liOrRootUL)

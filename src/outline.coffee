@@ -4,10 +4,9 @@ ItemSerializer = require './item-serializer'
 UndoManager = require './undo-manager'
 ItemPath = require './item-path'
 Mutation = require './mutation'
-urls = require './urls'
 shortid = require './shortid'
 _ = require 'underscore-plus'
-assert = require 'assert'
+{ assert } = require './util'
 Birch = require './birch'
 Item = require './item'
 
@@ -316,8 +315,8 @@ class Outline
   #
   # Returns Clone of the given {Item}.
   cloneItem: (item, deep=true, remapIDCallback) ->
-    assert.ok(not item.isOutlineRoot, 'Can not clone root')
-    assert.ok(item.outline is @, 'Item must be owned by this outline')
+    assert(not item.isOutlineRoot, 'Can not clone root')
+    assert(item.outline is @, 'Item must be owned by this outline')
 
     clonedItem = @createItem(item.bodyAttributedString.clone())
 
@@ -355,8 +354,8 @@ class Outline
   #
   # Returns {Item} clone.
   importItem: (item, deep=true, remapIDCallback) ->
-    assert.ok(not item.isOutlineRoot, 'Can not import root item')
-    assert.ok(item.outline isnt @, 'Item must not be owned by this outline')
+    assert(not item.isOutlineRoot, 'Can not import root item')
+    assert(item.outline isnt @, 'Item must not be owned by this outline')
 
     importedItem = @createItem(item.bodyAttributedString.clone(), item.id, remapIDCallback)
 
@@ -401,8 +400,8 @@ class Outline
 
       # 1.1 Validate reference item.
       if referenceItem
-        assert.ok(referenceItem.isInOutline, 'reference item must be in outline if defined')
-        assert.ok(referenceItem.outline is @, 'reference item outline must be this outline if defined')
+        assert(referenceItem.isInOutline, 'reference item must be in outline if defined')
+        assert(referenceItem.outline is @, 'reference item outline must be this outline if defined')
 
       # 2. Make sure each root has indent of at least 1 so that they will always
       # insert as children of outline.root.

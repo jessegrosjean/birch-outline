@@ -3,7 +3,6 @@ bmlTags = require './attributed-string-bml-tags'
 ElementType = require 'domelementtype'
 _ = require 'underscore-plus'
 dom = require './dom'
-assert = require 'assert'
 
 AttributedString.prototype.toInlineBMLString = ->
   p = dom.createElement('p')

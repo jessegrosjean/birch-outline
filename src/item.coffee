@@ -3,7 +3,7 @@ DateTime = require './date-time'
 ItemPath = require './item-path'
 Mutation = require './mutation'
 _ = require 'underscore-plus'
-assert = require 'assert'
+{ assert } = require './util'
 
 # Public: A paragraph of text in an {Outline}.
 #
@@ -420,10 +420,10 @@ class Item
       indent = 1 if indent < 1
 
       if previousSibling = @previousSibling
-        assert.ok(indent <= previousSibling.indent, 'item indent must be less then or equal to previousSibling indent')
+        assert(indent <= previousSibling.indent, 'item indent must be less then or equal to previousSibling indent')
 
       if nextSibling = @nextSibling
-        assert.ok(indent >= nextSibling.indent, 'item indent must be greater then or equal to nextSibling indent')
+        assert(indent >= nextSibling.indent, 'item indent must be greater then or equal to nextSibling indent')
 
       if @parent and indent is 1
         indent = null
@@ -456,7 +456,7 @@ class Item
     Item.removeItemsFromParents(children)
 
     if referenceSibling
-      assert.ok(referenceSibling.parent is @, 'referenceSibling must be child of this item')
+      assert(referenceSibling.parent is @, 'referenceSibling must be child of this item')
       previousSibling = referenceSibling.previousSibling
     else
       previousSibling = @lastChild
@@ -467,8 +467,8 @@ class Item
       outline.recordChange mutation
 
     for each, i in children
-      assert.ok(each.parent isnt @, 'insert items must not already be children')
-      assert.ok(each.outline is @outline, 'children must share same outline as parent')
+      assert(each.parent isnt @, 'insert items must not already be children')
+      assert(each.outline is @outline, 'children must share same outline as parent')
       each.previousSibling = children[i - 1]
       each.nextSibling = children[i + 1]
       each.parent = this
@@ -541,7 +541,7 @@ class Item
 
     depth = @depth
     for each in children
-      assert.ok(each.parent is @, 'removed items must be children of this item')
+      assert(each.parent is @, 'removed items must be children of this item')
       eachIndent = each.indent
       each.isInOutline = false
       each.nextSibling = null
@@ -627,7 +627,7 @@ class Item
   # - `name` The {String} attribute name.
   # - `value` The new attribute value.
   setAttribute: (name, value) ->
-    assert.ok(name isnt 'id', 'id is reserved attribute name')
+    assert(name isnt 'id', 'id is reserved attribute name')
 
     if value
       value = Item.objectToAttributeValueString(value)
@@ -869,8 +869,8 @@ class Item
     outline = @outline
     undoManager = outline.undoManager
 
-    assert.ok(insertedString.indexOf('\n') is -1, 'Item body text cannot contain newlines')
-    assert.ok(location + length <= oldBody.length, 'Replace range end must not be greater then body text')
+    assert(insertedString.indexOf('\n') is -1, 'Item body text cannot contain newlines')
+    assert(location + length <= oldBody.length, 'Replace range end must not be greater then body text')
 
     if isInOutline
       replacedText = bodyAttributedString.attributedSubstringFromRange(location, length)

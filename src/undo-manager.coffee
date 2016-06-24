@@ -1,5 +1,5 @@
 {Emitter} = require 'event-kit'
-assert = require 'assert'
+{ assert } = require './util'
 
 module.exports =
 class UndoManager
@@ -101,8 +101,8 @@ class UndoManager
     not @isUndoing and not @isRedoing and @redoStack.length > 0
 
   undo: (context) ->
-    assert.ok(@groupingLevel is 0, 'Unclosed grouping')
-    assert.ok(@disabledLevel is 0, 'Unclosed disable')
+    assert(@groupingLevel is 0, 'Unclosed grouping')
+    assert(@disabledLevel is 0, 'Unclosed disable')
 
     return unless @canUndo()
 
@@ -123,8 +123,8 @@ class UndoManager
     @emitter.emit 'did-undo', @getRedoGroupMetadata()
 
   redo: (context) ->
-    assert.ok(@groupingLevel is 0, 'Unclosed grouping')
-    assert.ok(@disabledLevel is 0, 'Unclosed disable')
+    assert(@groupingLevel is 0, 'Unclosed grouping')
+    assert(@disabledLevel is 0, 'Unclosed disable')
 
     return unless @canRedo()
 
@@ -149,7 +149,7 @@ class UndoManager
     @redoStack[@redoStack.length - 1]?.metadata
 
   removeAllActions: ->
-    assert.ok(@groupingLevel is 0, 'Unclosed grouping')
-    assert.ok(@disabledLevel is 0, 'Unclosed disable')
+    assert(@groupingLevel is 0, 'Unclosed grouping')
+    assert(@disabledLevel is 0, 'Unclosed disable')
     @undoStack = []
     @redoStack = []
