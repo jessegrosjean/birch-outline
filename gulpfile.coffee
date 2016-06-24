@@ -35,13 +35,16 @@ gulp.task 'doc', (cb) ->
     cb(err)
 
 gulp.task 'webpack', ['javascript', 'coffeescript'], ->
+  config = Object.create(webpackConfig)
+  config.output.path = null
   gulp.src('lib/index.js')
-    .pipe(webpack(webpackConfig))
+    .pipe(webpack(config))
     .pipe(gulp.dest('min/'))
 
 gulp.task 'webpack:watch', ['javascript', 'coffeescript'], ->
   config = Object.create(webpackConfig)
   config.watch = true
+  config.output.path = null
   config.plugins = [] # remove uglify
   gulp.src('lib/index.js')
     .pipe(webpack(config))
