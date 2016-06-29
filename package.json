@@ -3,12 +3,7 @@
   "version": "0.1.0",
   "description": "Cross-platform scripting for TaskPaper",
   "main": "./lib/index",
-  "atomTestRunner": "./test/atomTestRunner",
-  "scripts": {
-    "prepublish": "./node_modules/gulp/bin/gulp.js prepublish",
-    "start": "./node_modules/gulp/bin/gulp.js",
-    "test": "./node_modules/mocha/bin/mocha"
-  },
+  "atomTestRunner": "./spec/atomTestRunner",
   "repository": {
     "type": "git",
     "url": "https://github.com/jessegrosjean/birch-outline"
@@ -39,5 +34,10 @@
     "loophole": "^1.1.0",
     "mocha": "^2.5.3",
     "webpack-stream": "^3.2.0"
+  },
+  "scripts": {
+    "prepublish": "./node_modules/gulp/bin/gulp.js prepublish",
+    "start": "./node_modules/gulp/bin/gulp.js",
+    "test": "./node_modules/mocha/bin/mocha"
   }
 }
