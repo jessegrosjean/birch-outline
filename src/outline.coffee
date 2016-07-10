@@ -91,19 +91,16 @@ class Outline
     @undoSubscriptions.add undoManager.onDidCloseUndoGroup (group) =>
       if not undoManager.isUndoing and not undoManager.isRedoing and group.length > 0
         @updateChangeCount(Outline.ChangeDone)
-        @scheduleModifiedEvents()
     @undoSubscriptions.add undoManager.onWillUndo =>
       @breakUndoCoalescing()
     @undoSubscriptions.add undoManager.onDidUndo =>
       @updateChangeCount(Outline.ChangeUndone)
       @breakUndoCoalescing()
-      @scheduleModifiedEvents()
     @undoSubscriptions.add undoManager.onWillRedo =>
       @breakUndoCoalescing()
     @undoSubscriptions.add undoManager.onDidRedo =>
       @updateChangeCount(Outline.ChangeRedone)
       @breakUndoCoalescing()
-      @scheduleModifiedEvents()
 
     @reloadSerialization(serialization)
 
@@ -121,7 +118,6 @@ class Outline
   destroy: ->
     unless @destroyed
       Outline.removeOutline(this)
-      @cancelStoppedChangingTimeout()
       @undoSubscriptions?.dispose()
       @destroyed = true
       @emitter.emit 'did-destroy'
@@ -212,14 +208,15 @@ class Outline
   onDidEndChanges: (callback) ->
     @emitter.on 'did-end-changes', callback
 
-  # Public: Invoke the given callback when the value of {::isModified} changes.
+  # Public: Invoke the given callback when the outline's change count is
+  # updated.
   #
-  # - `callback` {Function} to be called when {::isModified} changes.
-  #   - `modified` {Boolean} indicating whether the outline is modified.
+  # - `callback` {Function} to be called when change count is updated.
+  #   - `changeType` The type of change made to the document.
   #
   # Returns a {Disposable} on which `.dispose()` can be called to unsubscribe.
-  onDidChangeModified: (callback) ->
-    @emitter.on 'did-change-modified', callback
+  onDidUpdateChangeCount: (callback) ->
+    @emitter.on 'did-update-change-count', callback
 
   # Public: Invoke the given callback when the outline is destroyed.
   #
@@ -578,10 +575,7 @@ class Outline
     @changesCallbacks.push(callback) if callback
     @changingCount--
     if @changingCount is 0
-      @conflict = false if @conflict and not @isModified()
       @emitter.emit('did-end-changes', @changes)
-      @scheduleModifiedEvents()
-
       changesCallbacks = @changesCallbacks
       @changesCallbacks = null
       for each in changesCallbacks
@@ -656,7 +650,6 @@ class Outline
         @root.removeChildren(@root.children)
         @root.appendChildren(items)
       @updateChangeCount(Outline.ChangeCleared)
-      @emitModifiedStatusChanged(false)
       @emitter.emit 'did-reload'
 
   ###
@@ -687,17 +680,16 @@ class Outline
 
   isRetained: -> @refcount > 0
 
-  # Public: Determine if the outline has changed since it was loaded.
-  #
-  # If the outline is unsaved, always returns `true` unless the outline is
-  # empty.
+  # Public: Determine if the outline is edited.
   #
   # Returns a {Boolean}.
-  isModified: ->
+  isEdited: ->
     @changeCount isnt 0
 
-  updateChangeCount: (change) ->
-    switch change
+  # Public: Updates the receiver’s change count according to the given change
+  # type.
+  updateChangeCount: (changeType) ->
+    switch changeType
       when Outline.ChangeDone
         @changeCount++
       when Outline.ChangeUndone
@@ -706,6 +698,7 @@ class Outline
         @changeCount = 0
       when Outline.ChangeRedone
         @changeCount++
+    @emitter.emit 'did-update-change-count', changeType
 
   retain: ->
     @refcount++
@@ -717,25 +710,6 @@ class Outline
       each.setUserData editorID, undefined
     @destroy() unless @isRetained()
     this
-
-  cancelStoppedChangingTimeout: ->
-    clearTimeout(@stoppedChangingTimeout) if @stoppedChangingTimeout
-
-  scheduleModifiedEvents: ->
-    @cancelStoppedChangingTimeout()
-    stoppedChangingCallback = =>
-      @stoppedChangingTimeout = null
-      modifiedStatus = @isModified()
-      @emitModifiedStatusChanged(modifiedStatus)
-    @stoppedChangingTimeout = setTimeout(
-      stoppedChangingCallback,
-      @stoppedChangingDelay
-    )
-
-  emitModifiedStatusChanged: (modifiedStatus) ->
-    return if modifiedStatus is @previousModifiedStatus
-    @previousModifiedStatus = modifiedStatus
-    @emitter.emit 'did-change-modified', modifiedStatus
 
 Outline.ChangeDone = 0
 Outline.ChangeUndone = 1
