@@ -149,7 +149,8 @@ class ItemSerializer
   # Returns {Array} of {Items}.
   @deserializeItems: (serializedItems, outline, options={}) ->
     options['type'] ?= ItemSerializer.BMLType
-    (each for each in @getSerializationsForType(options['type']) when each.deserializeItems)[0].deserializeItems(serializedItems, outline, options)
+    serialization = (each for each in @getSerializationsForType(options['type']) when each.deserializeItems)[0]
+    serialization.deserializeItems(serializedItems, outline, options)
 
 ItemSerializer.registerSerialization
   priority: 0
