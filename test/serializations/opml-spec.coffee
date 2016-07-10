@@ -31,16 +31,16 @@ describe 'OPML Serialization', ->
     outline.destroy()
 
   it 'should serialize items to OPML string', ->
-    ItemSerializer.serializeItems(outline.root.descendants, ItemSerializer.OPMLType).should.equal(fixtureAsOPMLString)
+    ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.OPMLType).should.equal(fixtureAsOPMLString)
 
   it 'should only serialize non default indents', ->
     one.setAttribute('indent', 1)
-    ItemSerializer.serializeItems(outline.root.descendants, ItemSerializer.OPMLType).should.equal(fixtureAsOPMLString)
+    ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.OPMLType).should.equal(fixtureAsOPMLString)
     one.setAttribute('indent', 2)
-    ItemSerializer.serializeItems(outline.root.descendants, ItemSerializer.OPMLType).should.not.equal(fixtureAsOPMLString)
+    ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.OPMLType).should.not.equal(fixtureAsOPMLString)
 
   it 'should deserialize items from OPML string', ->
-    one = ItemSerializer.deserializeItems(fixtureAsOPMLString, outline, ItemSerializer.OPMLType)[0]
+    one = ItemSerializer.deserializeItems(fixtureAsOPMLString, outline, type: ItemSerializer.OPMLType)[0]
     one.depth.should.equal(1)
     one.bodyString.should.equal('one')
     one.descendants.length.should.equal(5)

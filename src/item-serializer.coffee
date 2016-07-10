@@ -1,4 +1,4 @@
-path = require 'path'
+_ = require 'underscore-plus'
 
 # Public: A class for serializing and deserializing {Item}s.
 class ItemSerializer
@@ -35,7 +35,7 @@ class ItemSerializer
   @TEXTType: 'text/plain'
   @TEXTMimeType: @TEXTType
 
-  @UTIToMimeTypeMap:
+  @UTIToTypeMap:
     'public.plain-text': @TEXTType
     'public.utf8-plain-text': @TEXTType
     'com.hogbaysoftware.ItemReferencePboardType': @ItemReferencesType
@@ -52,21 +52,22 @@ class ItemSerializer
     @serializations.sort (a, b) ->
       a.priority - b.priority
 
-  @getSerializationsForMimeType: (mimeType) ->
-    if @UTIToMimeTypeMap[mimeType]
-      mimeType = @UTIToMimeTypeMap[mimeType]
-    results = (each.serialization for each in @serializations when mimeType in each.mimeTypes)
+  @getSerializationsForType: (type) ->
+    if @UTIToTypeMap[type]
+      type = @UTIToTypeMap[type]
+    results = (each.serialization for each in @serializations when type in each.types)
     if results.length is 0
       # Fall back to plain text serializer if nothing else is found
-      results = @getSerializationsForMimeType(ItemSerializer.TEXTType)
+      results = @getSerializationsForType(ItemSerializer.TEXTType)
     results
 
-  @getMimeTypeForURI: (uri) ->
-    uri ?= ''
-    extension = path.extname(uri).toLowerCase().substr(1)
-    for each in @serializations
-      if extension in each.extensions
-        return each.mimeTypes[0]
+  @getSerializationsForExtension: (extension='') ->
+    extension = extension.toLowerCase()
+    results = (each.serialization for each in @serializations when extension in each.extensions)
+    if results.length is 0
+      # Fall back to plain text serializer if nothing else is found
+      results = @getSerializationsForType(ItemSerializer.TEXTType)
+    results
 
   ###
   Section: Serialize & Deserialize Items
@@ -75,16 +76,27 @@ class ItemSerializer
   # Public: Serialize items into a supported format.
   #
   # - `items` {Item} {Array} to serialize.
-  # - `mimeType` Supported serialization format.
-  @serializeItems: (items, mimeType, options={}) ->
-    mimeType ?= ItemSerializer.BMLType
-    serialization = (each for each in @getSerializationsForMimeType(mimeType) when each.beginSerialization)[0]
+  # - `options` (optional) Serialization options.
+  #   * `type` (optional) {String} (default: ItemSerializer.BMLType)
+  #   * `startOffset` (optional) {Number} (default: 0)
+  #   * `endOffset` (optional) {Number} (default: lastItem.bodyString.length)
+  #   * `expandedItems` (optional) {Item} {Array} of expanded items
+  @serializeItems: (items, options={}) ->
+    if _.isString(options)
+      options = type: options
 
     firstItem = items[0]
     lastItem = items[items.length - 1]
-    startOffset = options.startOffset ? 0
-    endOffset = options.endOffset ? lastItem.bodyString.length
+
+    options.type ?= ItemSerializer.BMLType
+    options.startOffset ?= 0
+    options.endOffset ?= lastItem.bodyString.length
     options.baseDepth ?= Number.MAX_VALUE
+
+    serialization = (each for each in @getSerializationsForType(options['type']) when each.beginSerialization)[0]
+
+    startOffset = options.startOffset
+    endOffset = options.endOffset
     emptyEncodeLastItem = false
     context = {}
 
@@ -132,41 +144,41 @@ class ItemSerializer
   #
   # - `itemsData` {String} to deserialize.
   # - `outline` {Outline} to use when creating deserialized items.
-  # - `mimeType` Format to deserialize.
+  # - `options` Deserialization options.
   #
   # Returns {Array} of {Items}.
-  @deserializeItems: (itemsData, outline, mimeType, options) ->
-    mimeType ?= ItemSerializer.BMLType
-    (each for each in @getSerializationsForMimeType(mimeType) when each.deserializeItems)[0].deserializeItems(itemsData, outline, options)
+  @deserializeItems: (serializedItems, outline, options={}) ->
+    options['type'] ?= ItemSerializer.BMLType
+    (each for each in @getSerializationsForType(options['type']) when each.deserializeItems)[0].deserializeItems(serializedItems, outline, options)
 
 ItemSerializer.registerSerialization
   priority: 0
   extensions: []
-  mimeTypes: [ItemSerializer.ItemReferencesType]
+  types: [ItemSerializer.ItemReferencesType]
   serialization: require('./serializations/item-references')
 
 ItemSerializer.registerSerialization
   priority: 1
   extensions: ['bml']
-  mimeTypes: [ItemSerializer.BMLType]
+  types: [ItemSerializer.BMLType]
   serialization: require('./serializations/bml')
 
 ItemSerializer.registerSerialization
   priority: 2
   extensions: ['opml']
-  mimeTypes: [ItemSerializer.OPMLType]
+  types: [ItemSerializer.OPMLType]
   serialization: require('./serializations/opml')
 
 ItemSerializer.registerSerialization
   priority: 3
   extensions: ['taskpaper']
-  mimeTypes: [ItemSerializer.TaskPaperType]
+  types: [ItemSerializer.TaskPaperType]
   serialization: require('./serializations/taskpaper')
 
 ItemSerializer.registerSerialization
   priority: 4
   extensions: []
-  mimeTypes: [ItemSerializer.TEXTType]
+  types: [ItemSerializer.TEXTType]
   serialization: require('./serializations/text')
 
 module.exports = ItemSerializer

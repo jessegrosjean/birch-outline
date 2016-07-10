@@ -15,7 +15,7 @@ describe 'Item References Serialization', ->
     outline.destroy()
 
   it 'should serialize and deserialize items', ->
-    serializedReferences = ItemSerializer.serializeItems([three, five], ItemSerializer.ItemReferencesType)
-    items = ItemSerializer.deserializeItems(serializedReferences, outline, ItemSerializer.ItemReferencesType)
+    serializedReferences = ItemSerializer.serializeItems([three, five], type: ItemSerializer.ItemReferencesType)
+    items = ItemSerializer.deserializeItems(serializedReferences, outline, type: ItemSerializer.ItemReferencesType)
     delete items['loadOptions']
     items.should.eql([three, five])

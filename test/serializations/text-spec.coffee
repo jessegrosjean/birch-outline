@@ -24,10 +24,10 @@ describe 'TEXT Serialization', ->
     outline.destroy()
 
   it 'should serialize items to TEXT string', ->
-    ItemSerializer.serializeItems(outline.root.descendants, ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
+    ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
 
   it 'should deserialize items from TEXT string', ->
-    one = ItemSerializer.deserializeItems(fixtureAsTextString, outline, ItemSerializer.TEXTType)[0]
+    one = ItemSerializer.deserializeItems(fixtureAsTextString, outline, type: ItemSerializer.TEXTType)[0]
     one.depth.should.equal(1)
     one.bodyString.should.equal('one')
     one.descendants.length.should.equal(5)
@@ -49,8 +49,8 @@ describe 'TEXT Serialization', ->
         five
             six
     '''
-    deserializedOne = ItemSerializer.deserializeItems(serializedItems, outline, ItemSerializer.TEXTType)[0]
-    ItemSerializer.serializeItems(Item.flattenItemHiearchy([deserializedOne], false), ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
+    deserializedOne = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)[0]
+    ItemSerializer.serializeItems(Item.flattenItemHiearchy([deserializedOne], false), type: ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
 
     # 4 spaces
     serializedItems = '''
@@ -61,8 +61,8 @@ describe 'TEXT Serialization', ->
           five
                   six
     '''
-    deserializedOne = ItemSerializer.deserializeItems(serializedItems, outline, ItemSerializer.TEXTType)[0]
-    ItemSerializer.serializeItems(Item.flattenItemHiearchy([deserializedOne], false), ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
+    deserializedOne = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)[0]
+    ItemSerializer.serializeItems(Item.flattenItemHiearchy([deserializedOne], false), type: ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
 
     # 8 spaces
     serializedItems = '''
@@ -73,8 +73,8 @@ describe 'TEXT Serialization', ->
               five
                               six
     '''
-    deserializedOne = ItemSerializer.deserializeItems(serializedItems, outline, ItemSerializer.TEXTType)[0]
-    ItemSerializer.serializeItems(Item.flattenItemHiearchy([deserializedOne], false), ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
+    deserializedOne = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)[0]
+    ItemSerializer.serializeItems(Item.flattenItemHiearchy([deserializedOne], false), type: ItemSerializer.TEXTType).should.equal(fixtureAsTextString)
 
   it 'should deserialize empty lines at level of next non empty line', ->
     serializedItems = '''
@@ -86,7 +86,7 @@ describe 'TEXT Serialization', ->
       \t\tsix
 
     '''
-    roots = ItemSerializer.deserializeItems(serializedItems, outline, ItemSerializer.TEXTType)
+    roots = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)
     ItemSerializer.serializeItems(outline.root.descendants, ItemSerializer.TEXTType)
 
     each = roots[0]
@@ -103,7 +103,7 @@ describe 'TEXT Serialization', ->
 
       \t\one
     '''
-    roots = ItemSerializer.deserializeItems(serializedItems, outline, ItemSerializer.TEXTType)
+    roots = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)
     roots.length.should.equal(2)
     roots[0].depth.should.equal(2)
     roots[1].depth.should.equal(2)
@@ -111,7 +111,7 @@ describe 'TEXT Serialization', ->
   it 'should serialize and deserialize overindented items', ->
     item = outline.createItem('one')
     item.indent = 2
-    serializedItems = ItemSerializer.serializeItems([item], ItemSerializer.TEXTType, baseDepth: 0)
+    serializedItems = ItemSerializer.serializeItems([item], type: ItemSerializer.TEXTType, baseDepth: 0)
     serializedItems.should.equal('\t\tone')
-    roots = ItemSerializer.deserializeItems(serializedItems, outline, ItemSerializer.TEXTType)
+    roots = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)
     roots[0].depth.should.equal(3)

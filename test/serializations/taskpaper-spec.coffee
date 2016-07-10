@@ -25,7 +25,7 @@ describe 'TaskPaper', ->
   describe 'Serialization', ->
 
     it 'should serialize items to TaskPaper string', ->
-      ItemSerializer.serializeItems(one.branchItems, ItemSerializer.TaskPaperType).should.equal(fixtureAsTextString)
+      ItemSerializer.serializeItems(one.branchItems, type: ItemSerializer.TaskPaperType).should.equal(fixtureAsTextString)
 
     it 'should deserialize items from TaskPaper string', ->
       one.depth.should.equal(1)

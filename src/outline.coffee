@@ -82,7 +82,7 @@ class Outline
     @root = @createItem '', Birch.RootID
     @root.isInOutline = true
     @changeDelegateProcessing = 0
-    @changeDelegate = ItemSerializer.getSerializationsForMimeType(@type)[0]?.changeDelegate
+    @changeDelegate = ItemSerializer.getSerializationsForType(@type)[0]?.changeDelegate
 
     @undoManager = undoManager = new UndoManager
     @emitter = new Emitter
@@ -638,18 +638,21 @@ class Outline
 
   # Public: Return a serialized {String} version of this Outline's content.
   #
-  # - `type` (optional) Defaults to {outline.type}
-  serialize: (type) ->
-    ItemSerializer.serializeItems(@root.descendants, type ? @type)
+  # - `options` (optional) Serialization options as defined in `{ItemSerializer.serializeItems}.
+  #   `type` key defaults to {outline::type}.
+  serialize: (options={}) ->
+    options['type'] ?= @type
+    ItemSerializer.serializeItems(@root.descendants, options)
 
   # Public: Load {String}
   #
-  # - `type` (optional) {String} format to serialize as. Defaults to {outline.type}
-  reloadSerialization: (serialization, type) ->
+  # - `options` (optional) Deserialization options as defined in `{ItemSerializer.deserializeItems}.
+  #   `type` key defaults to {outline::type}.
+  reloadSerialization: (serialization, options) ->
     if serialization
       @emitter.emit 'will-reload'
       @groupChanges =>
-        items = ItemSerializer.deserializeItems(serialization, @, type ? @type)
+        items = ItemSerializer.deserializeItems(serialization, @, type: type ? @type)
         @root.removeChildren(@root.children)
         @root.appendChildren(items)
       @updateChangeCount(Outline.ChangeCleared)
