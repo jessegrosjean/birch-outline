@@ -642,11 +642,12 @@ class Outline
   #
   # - `options` (optional) Deserialization options as defined in `{ItemSerializer.deserializeItems}.
   #   `type` key defaults to {outline::type}.
-  reloadSerialization: (serialization, options) ->
+  reloadSerialization: (serialization, options={}) ->
     if serialization
+      options['type'] ?= @type
       @emitter.emit 'will-reload'
       @groupChanges =>
-        items = ItemSerializer.deserializeItems(serialization, @, type: type ? @type)
+        items = ItemSerializer.deserializeItems(serialization, @, options)
         @root.removeChildren(@root.children)
         @root.appendChildren(items)
       @updateChangeCount(Outline.ChangeCleared)
@@ -711,12 +712,9 @@ class Outline
     @destroy() unless @isRetained()
     this
 
-Outline.ChangeDone = 0
-Outline.ChangeUndone = 1
-Outline.ChangeCleared = 2
-Outline.ChangeReadOtherContents = 3
-Outline.ChangeAutosaved = 4
-Outline.ChangeRedone = 5
-Outline.ChangeDiscardable = 256
+Outline.ChangeDone = 'Done'
+Outline.ChangeUndone = 'Undone'
+Outline.ChangeRedone = 'Redone'
+Outline.ChangeCleared = 'Cleared'
 
 module.exports = Outline

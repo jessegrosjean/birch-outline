@@ -461,7 +461,7 @@ Class |  Summary
   </tr>
   
   <tr>
-    <td><code>:: <b>serializeItems(</b> items, mimeType <b>)</b></code></td>
+    <td><code>:: <b>serializeItems(</b> items[, options] <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>class</sub></td>
     <td width="8%" align="center"><sub><a href="#class-ItemSerializer">ItemSerializer</a></sub></td>
@@ -470,7 +470,13 @@ Class |  Summary
     <td colspan="4">
       <ul>
   <li><code>items</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> to serialize.</li>
-  <li><code>mimeType</code> Supported serialization format. </li>
+  <li><code>options</code> Serialization options.<ul>
+  <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> (default: ItemSerializer.BMLType)</li>
+  <li><code>startOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> (default: 0)</li>
+  <li><code>endOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> (default: lastItem.bodyString.length)</li>
+  <li><code>expandedItems</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of expanded items </li>
+  </ul>
+  </li>
   </ul>
   
       <p>Serialize items into a supported format.</p>
@@ -480,7 +486,7 @@ Class |  Summary
   </tr>
   
   <tr>
-    <td><code>:: <b>deserializeItems(</b> itemsData, outline, mimeType <b>)</b></code></td>
+    <td><code>:: <b>deserializeItems(</b> itemsData, outline, options <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>class</sub></td>
     <td width="8%" align="center"><sub><a href="#class-ItemSerializer">ItemSerializer</a></sub></td>
@@ -490,7 +496,7 @@ Class |  Summary
       <ul>
   <li><code>itemsData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> to deserialize.</li>
   <li><code>outline</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L56">Outline</a> to use when creating deserialized items.</li>
-  <li><code>mimeType</code> Format to deserialize.</li>
+  <li><code>options</code> Deserialization options.</li>
   </ul>
   
       <p>Deserialize items from a supported format.</p>
@@ -1805,7 +1811,7 @@ outline and are reasigned to a new parent item.</p>
   </tr>
   
   <tr>
-    <td><code>:: <b>onDidChangeModified(</b> callback <b>)</b></code></td>
+    <td><code>:: <b>onDidUpdateChangeCount(</b> callback <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>instance</sub></td>
     <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
@@ -1813,13 +1819,14 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> to be called when {::isModified} changes.<ul>
-  <li><code>modified</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a> indicating whether the outline is modified.</li>
+  <li><code>callback</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">Function</a> to be called when change count is updated.<ul>
+  <li><code>changeType</code> The type of change made to the document.</li>
   </ul>
   </li>
   </ul>
   
-      <p>Invoke the given callback when the value of {::isModified} changes.</p>
+      <p>Invoke the given callback when the outline&#39;s change count is
+  updated.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
@@ -2098,7 +2105,7 @@ outline and are reasigned to a new parent item.</p>
   </tr>
   
   <tr>
-    <td><code>:: <b>serialize(</b> [type] <b>)</b></code></td>
+    <td><code>:: <b>serialize(</b> [options] <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>instance</sub></td>
     <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
@@ -2106,7 +2113,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>type</code> Defaults to {outline.type} </li>
+  <li><code>options</code> Serialization options as defined in <code>{ItemSerializer.serializeItems}.</code>type` key defaults to {outline::type}. </li>
   </ul>
   
       <p>Return a serialized <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> version of this Outline&#39;s content.</p>
@@ -2116,7 +2123,7 @@ outline and are reasigned to a new parent item.</p>
   </tr>
   
   <tr>
-    <td><code>:: <b>reloadSerialization(</b> [type] <b>)</b></code></td>
+    <td><code>:: <b>reloadSerialization(</b> [options] <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>instance</sub></td>
     <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
@@ -2124,7 +2131,7 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       <ul>
-  <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> format to serialize as. Defaults to {outline.type} </li>
+  <li><code>options</code> Deserialization options as defined in <code>{ItemSerializer.deserializeItems}.</code>type` key defaults to {outline::type}. </li>
   </ul>
   
       <p>Load <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></p>
@@ -2152,7 +2159,7 @@ outline and are reasigned to a new parent item.</p>
   </tr>
   
   <tr>
-    <td><code>:: <b>isModified(</b>  <b>)</b></code></td>
+    <td><code>:: <b>isEdited(</b>  <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>instance</sub></td>
     <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
@@ -2160,15 +2167,29 @@ outline and are reasigned to a new parent item.</p>
   <tr>
     <td colspan="4">
       
-      <p>Determine if the outline has changed since it was loaded.</p>
-  <p>If the outline is unsaved, always returns <code>true</code> unless the outline is
-  empty.</p>
+      <p>Determine if the outline is edited.</p>
   
       <p>  <em>Returns</em></p>
   <ul>
   <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>.</li>
   </ul>
   
+    </td>
+  </tr>
+  
+  <tr>
+    <td><code>:: <b>updateChangeCount(</b>  <b>)</b></code></td>
+    <td width="8%" align="center"><sub>public</sub></td>
+    <td width="8%" align="center"><sub>instance</sub></td>
+    <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      
+      <p>Updates the receiver’s change count according to the given change
+  type. </p>
+  
+      
     </td>
   </tr>
   

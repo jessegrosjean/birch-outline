@@ -71,6 +71,11 @@ describe 'BML Serialization', ->
       one.lastChild.lastChild.indent.should.equal(2)
       one.lastChild.lastChild.depth.should.equal(4)
 
+    it 'reload outline from BML string', ->
+      out = new Outline()
+      out.reloadSerialization(fixtureAsBMLString, type: ItemSerializer.BMLType)
+      ItemSerializer.serializeItems(outline.root.descendants).should.equal(fixtureAsBMLString)
+
     it 'should throw exception when loading invalid html outline UL child', ->
       bmlString = '''
         <ul id="Birch">
