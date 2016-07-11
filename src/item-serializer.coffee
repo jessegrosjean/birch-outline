@@ -78,8 +78,8 @@ class ItemSerializer
   # - `items` {Item} {Array} to serialize.
   # - `options` (optional) Serialization options.
   #   * `type` (optional) {String} (default: ItemSerializer.BMLType)
-  #   * `startOffset` (optional) {Number} (default: 0)
-  #   * `endOffset` (optional) {Number} (default: lastItem.bodyString.length)
+  #   * `startOffset` (optional) {Number} (default: 0) Offset into first into to start at.
+  #   * `endOffset` (optional) {Number} (default: lastItem.bodyString.length) Offset from end of last item to end at.
   #   * `expandedItems` (optional) {Item} {Array} of expanded items
   @serializeItems: (items, options={}) ->
     if _.isString(options)
@@ -145,6 +145,7 @@ class ItemSerializer
   # - `itemsData` {String} to deserialize.
   # - `outline` {Outline} to use when creating deserialized items.
   # - `options` Deserialization options.
+  #   * `type` (optional) {String} (default: ItemSerializer.TEXTType)
   #
   # Returns {Array} of {Items}.
   @deserializeItems: (serializedItems, outline, options={}) ->

@@ -472,8 +472,8 @@ Class |  Summary
   <li><code>items</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> to serialize.</li>
   <li><code>options</code> Serialization options.<ul>
   <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> (default: ItemSerializer.BMLType)</li>
-  <li><code>startOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> (default: 0)</li>
-  <li><code>endOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> (default: lastItem.bodyString.length)</li>
+  <li><code>startOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> (default: 0) Offset into first into to start at.</li>
+  <li><code>endOffset</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">Number</a> (default: lastItem.bodyString.length) Offset from end of last item to end at.</li>
   <li><code>expandedItems</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/item.coffee#L57">Item</a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a> of expanded items </li>
   </ul>
   </li>
@@ -496,7 +496,10 @@ Class |  Summary
       <ul>
   <li><code>itemsData</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> to deserialize.</li>
   <li><code>outline</code> <a href="https://github.com/jessegrosjean/birch-outline/blob/v0.1.0/src/outline.coffee#L56">Outline</a> to use when creating deserialized items.</li>
-  <li><code>options</code> Deserialization options.</li>
+  <li><code>options</code> Deserialization options.<ul>
+  <li><code>type</code> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a> (default: ItemSerializer.TEXTType)</li>
+  </ul>
+  </li>
   </ul>
   
       <p>Deserialize items from a supported format.</p>
