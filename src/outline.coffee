@@ -57,7 +57,7 @@ class Outline
 
   type: null
   idsToItems: null
-  refcount: 0
+  retainCount: 0
   changes: null
   changeCount: 0
   undoSubscriptions: null
@@ -117,7 +117,6 @@ class Outline
 
   destroy: ->
     unless @destroyed
-      Outline.removeOutline(this)
       @undoSubscriptions?.dispose()
       @destroyed = true
       @emitter.emit 'did-destroy'
@@ -145,25 +144,41 @@ class Outline
       if each.id is id
         return each
 
-  @addOutline: (outline, options={}) ->
-    @addOutlineAtIndex(outline, @outlines.length, options)
+  @addOutline: (outline) ->
+    @addOutlineAtIndex(outline, @outlines.length)
 
-  @addOutlineAtIndex: (outline, index, options={}) ->
+  @addOutlineAtIndex: (outline, index) ->
+    assert(!@getOutlineForID(outline.id))
     @outlines.splice(index, 0, outline)
-    @subscribeToOutline(outline)
+    outline.onDidDestroy =>
+      @removeOutline(outline)
     outline
 
   @removeOutline: (outline) ->
     index = @outlines.indexOf(outline)
     @removeOutlineAtIndex(index) unless index is -1
 
-  @removeOutlineAtIndex: (index, options={}) ->
+  @removeOutlineAtIndex: (index) ->
     [outline] = @outlines.splice(index, 1)
     outline?.destroy()
 
-  @subscribeToOutline: (outline) ->
-    outline.onDidDestroy =>
-      @removeOutline(outline)
+  ###
+  Section: Lifecycle
+  ###
+
+  isRetained: -> @retainCount > 0
+
+  retain: ->
+    assert(!@destroyed, 'Cant retain destroyed outline')
+    if @retainCount is 0
+      Outline.addOutline(@)
+    @retainCount++
+    this
+
+  release: ->
+    @retainCount--
+    @destroy() unless @isRetained()
+    this
 
   ###
   Section: Events
@@ -514,6 +529,26 @@ class Outline
   Section: Changes
   ###
 
+  # Public: Determine if the outline is changed.
+  #
+  # Returns a {Boolean}.
+  isChanged: ->
+    @changeCount isnt 0
+
+  # Public: Updates the receiver’s change count according to the given change
+  # type.
+  updateChangeCount: (changeType) ->
+    switch changeType
+      when Outline.ChangeDone
+        @changeCount++
+      when Outline.ChangeUndone
+        @changeCount--
+      when Outline.ChangeCleared
+        @changeCount = 0
+      when Outline.ChangeRedone
+        @changeCount++
+    @emitter.emit 'did-update-change-count', changeType
+
   # Public: Read-only {Boolean} true if outline is changing.
   isChanging: null
   Object.defineProperty @::, 'isChanging',
@@ -582,8 +617,9 @@ class Outline
         each(@changes)
       @changes = null
 
-  breakUndoCoalescing: ->
-    @coalescingMutation = null
+  ###
+  Section: Undo
+  ###
 
   # Public: Group multiple changes into a single undo group.
   #
@@ -617,6 +653,9 @@ class Outline
 
   endUndoGrouping: ->
     @undoManager.endUndoGrouping()
+
+  breakUndoCoalescing: ->
+    @coalescingMutation = null
 
   # Public: Undo the last undo group.
   undo: ->
@@ -676,41 +715,6 @@ class Outline
         return id
       else
         candidateID = null
-
-  isDestroyed: -> @destroyed
-
-  isRetained: -> @refcount > 0
-
-  # Public: Determine if the outline is edited.
-  #
-  # Returns a {Boolean}.
-  isEdited: ->
-    @changeCount isnt 0
-
-  # Public: Updates the receiver’s change count according to the given change
-  # type.
-  updateChangeCount: (changeType) ->
-    switch changeType
-      when Outline.ChangeDone
-        @changeCount++
-      when Outline.ChangeUndone
-        @changeCount--
-      when Outline.ChangeCleared
-        @changeCount = 0
-      when Outline.ChangeRedone
-        @changeCount++
-    @emitter.emit 'did-update-change-count', changeType
-
-  retain: ->
-    @refcount++
-    this
-
-  release: (editorID) ->
-    @refcount--
-    for each in @items
-      each.setUserData editorID, undefined
-    @destroy() unless @isRetained()
-    this
 
 Outline.ChangeDone = 'Done'
 Outline.ChangeUndone = 'Undone'

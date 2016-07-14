@@ -2017,6 +2017,41 @@ outline and are reasigned to a new parent item.</p>
   </tr>
   
   <tr>
+    <td><code>:: <b>isChanged(</b>  <b>)</b></code></td>
+    <td width="8%" align="center"><sub>public</sub></td>
+    <td width="8%" align="center"><sub>instance</sub></td>
+    <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      
+      <p>Determine if the outline is changed.</p>
+  
+      <p>  <em>Returns</em></p>
+  <ul>
+  <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>.</li>
+  </ul>
+  
+    </td>
+  </tr>
+  
+  <tr>
+    <td><code>:: <b>updateChangeCount(</b>  <b>)</b></code></td>
+    <td width="8%" align="center"><sub>public</sub></td>
+    <td width="8%" align="center"><sub>instance</sub></td>
+    <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
+  </tr>
+  <tr>
+    <td colspan="4">
+      
+      <p>Updates the receiver’s change count according to the given change
+  type. </p>
+  
+      
+    </td>
+  </tr>
+  
+  <tr>
     <td><code>:: <b>groupChanges(</b> callback <b>)</b></code></td>
     <td width="8%" align="center"><sub>public</sub></td>
     <td width="8%" align="center"><sub>instance</sub></td>
@@ -2158,41 +2193,6 @@ outline and are reasigned to a new parent item.</p>
   <li>Returns debug string for this item.</li>
   </ul>
   
-    </td>
-  </tr>
-  
-  <tr>
-    <td><code>:: <b>isEdited(</b>  <b>)</b></code></td>
-    <td width="8%" align="center"><sub>public</sub></td>
-    <td width="8%" align="center"><sub>instance</sub></td>
-    <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
-  </tr>
-  <tr>
-    <td colspan="4">
-      
-      <p>Determine if the outline is edited.</p>
-  
-      <p>  <em>Returns</em></p>
-  <ul>
-  <li>Returns a <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a>.</li>
-  </ul>
-  
-    </td>
-  </tr>
-  
-  <tr>
-    <td><code>:: <b>updateChangeCount(</b>  <b>)</b></code></td>
-    <td width="8%" align="center"><sub>public</sub></td>
-    <td width="8%" align="center"><sub>instance</sub></td>
-    <td width="8%" align="center"><sub><a href="#class-Outline">Outline</a></sub></td>
-  </tr>
-  <tr>
-    <td colspan="4">
-      
-      <p>Updates the receiver’s change count according to the given change
-  type. </p>
-  
-      
     </td>
   </tr>
   
