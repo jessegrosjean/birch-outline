@@ -693,24 +693,6 @@ class Item
       object
 
   ###
-  Section: User Data
-  ###
-
-  userData: null
-
-  getUserData: (userKey) ->
-    @userData?[userKey]
-
-  setUserData: (userKey, userData) ->
-    unless @userData
-      @userData = {}
-
-    if userData is undefined
-      delete @userData[userKey]
-    else
-      @userData[userKey] = userData
-
-  ###
   Section: Item Body Text
   ###
 
