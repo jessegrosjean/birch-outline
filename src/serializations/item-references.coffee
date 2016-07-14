@@ -38,12 +38,13 @@ Deserialization
 ###
 
 deserializeItems = (json, outline, options) ->
+  Outline = require('../outline')
   json = JSON.parse(json)
-  sourceOutline = require('../outline').getOutlineForID(json.outlineID)
   items = []
   expandedItemIDs = []
   items.loadOptions =
     expanded: expandedItemIDs
+  sourceOutline = Outline.getOutlineForID(json.outlineID)
 
   if sourceOutline
     for each in json.items
