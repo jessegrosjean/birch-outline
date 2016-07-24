@@ -57,3 +57,4 @@ module.exports =
   endSerialization: text.endSerialization
   emptyEncodeLastItem: text.emptyEncodeLastItem
   deserializeItems: deserializeItems
+  itemPathTypes: 'project': true, 'task': true, 'note': true

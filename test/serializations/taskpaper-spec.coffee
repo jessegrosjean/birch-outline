@@ -192,3 +192,10 @@ describe 'TaskPaper', ->
         one.bodyString = 'www.apple.com or ftp://apple.com mailto:jesse@hogbay.com'
         one.bodyHighlightedAttributedString.toString().should.equal('(www.apple.com/content:""/link:"http://www.apple.com")( or /content:"")(ftp://apple.com/content:""/link:"ftp://apple.com")( /content:"")(mailto:jesse@hogbay.com/content:""/link:"mailto:jesse@hogbay.com")')
 
+  describe 'Item Path Types', ->
+
+    it.only 'should use item path type keywords', ->
+      outline.evaluateItemPath('task').length.should.equal(0)
+      one.setAttribute('data-type', 'task')
+      debugger
+      outline.evaluateItemPath('task').length.should.equal(1)

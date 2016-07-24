@@ -305,6 +305,7 @@ class Outline
   evaluateItemPath: (itemPath, contextItem, options) ->
     options ?= {}
     options.root ?= @root
+    options.types ?= ItemSerializer.getSerializationsForType(@type)[0].itemPathTypes
     contextItem ?= @root
     ItemPath.evaluate itemPath, contextItem, options
 
