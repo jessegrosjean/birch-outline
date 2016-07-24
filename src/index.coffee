@@ -10,6 +10,7 @@ module.exports =
 
 
   # Private exports
+  ItemPathQuery: require './item-path-query'
   SpanBuffer: require './span-buffer'
   Span: require './span-buffer/span'
   shortid: require './shortid'
