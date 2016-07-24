@@ -194,8 +194,7 @@ describe 'TaskPaper', ->
 
   describe 'Item Path Types', ->
 
-    it.only 'should use item path type keywords', ->
+    it 'should use item path type keywords', ->
       outline.evaluateItemPath('task').length.should.equal(0)
       one.setAttribute('data-type', 'task')
-      debugger
       outline.evaluateItemPath('task').length.should.equal(1)
