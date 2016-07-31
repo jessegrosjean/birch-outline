@@ -279,21 +279,26 @@ class Outline
         items.push each
     items
 
-  getAttributeNames: (autoIncludeNames=[]) ->
+  getAttributeNames: (autoIncludeAttributes=[], excludeAttributes=[]) ->
     attributes = new Set()
 
-    for each in autoIncludeNames
+    for each in autoIncludeAttributes
       attributes.add(each)
 
     for each in @root.descendants
       for eachAttributeName in Object.keys(each.attributes)
-        attributes.add(eachAttributeName)
+        if excludeAttributes.indexOf(eachAttributeName) is -1
+          attributes.add(eachAttributeName)
 
     attributesArray = []
     attributes.forEach (each) ->
       attributesArray.push(each)
     attributesArray.sort()
     attributesArray
+
+  getTagAttributeNames: (autoIncludeAttributes=[], excludeAttributes=[]) ->
+    @getAttributeNames(autoIncludeAttributes, excludeAttributes).filter (each) ->
+      each.substring(0, 5) is 'data-'
 
   # Public: Evaluate the item path starting from this outline's {Outline.root}
   # item or from the passed in `contextItem` if present.
