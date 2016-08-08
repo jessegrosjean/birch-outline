@@ -42,7 +42,7 @@ calculateInitialNodeRanges = (attributedString) ->
           # attribute name/value an attribute on the span.
           if bmlTags[attributeName]
             element = dom.createElement(attributeName)
-            if _.isString(attributeValue)
+            if typeof attributeValue is 'string'
               element.attribs['value'] = attributeValue
             else if _.isObject(attributeValue)
               for attrName, attrValue of attributeValue

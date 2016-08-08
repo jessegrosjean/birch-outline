@@ -1,3 +1,4 @@
+{ shallowObjectEqual } = require '../util'
 SpanBuffer = require '../span-buffer'
 RunSpan = require './run-span'
 
@@ -50,7 +51,7 @@ class RunBuffer extends SpanBuffer
 
     if longestEffectiveRange
       @_longestEffectiveRange start.spanIndex, start.span, longestEffectiveRange, (run) ->
-        _.isEqual(run.attributes, result)
+        shallowObjectEqual(run.attributes, result)
 
     result
 

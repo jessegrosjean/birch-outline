@@ -39,7 +39,7 @@ createTextNode = (text) ->
     data: text
 
 cloneNode = (node) ->
-  clone = _.clone(node)
+  clone = Object.assign({}, node)
   if clone.children
     clone.children = []
     for each in node.children
@@ -153,7 +153,7 @@ normalizeDOM = (element, skip={}) ->
   if skip[element.name]
     return
   if element.children?.length > 0
-    for each in _.clone(element.children)
+    for each in element.children.slice()
       if each.type is ElementType.Text
         removeElement(each)
       else
@@ -164,7 +164,7 @@ prettyDOM = (element, skip={}, trimEmpty={}, indent='\n') ->
     return
   if element.children.length > 0
     childIndent = indent + '  '
-    for each in _.clone(element.children)
+    for each in element.children.slice()
       domutils.prepend(each, createTextNode(childIndent))
       prettyDOM(each, skip, trimEmpty, childIndent)
     domutils.append(lastChild(element), createTextNode(indent))

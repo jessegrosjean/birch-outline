@@ -339,9 +339,7 @@ class Outline
     clonedItem = @createItem(item.bodyAttributedString.clone())
 
     if item.attributes
-      clonedItem.attributes = _.clone(item.attributes)
-    if item.userData
-      clonedItem.userData = _.clone(item.userData)
+      clonedItem.attributes = Object.assign({}, item.attributes)
 
     clonedItem.indent = item.depth
 
@@ -378,9 +376,7 @@ class Outline
     importedItem = @createItem(item.bodyAttributedString.clone(), item.id, remapIDCallback)
 
     if item.attributes
-      importedItem.attributes = _.clone(item.attributes)
-    if item.userData
-      importedItem.userData = _.clone(item.userData)
+      importedItem.attributes = Object.assign({}, item.attributes)
 
     if deep and eachChild = item.firstChild
       children = []
@@ -406,7 +402,7 @@ class Outline
   # - `items` {Item} or {Array} of {Item}s to insert.
   # - `referenceItem` Reference {Item} to insert before.
   insertItemsBefore: (items, referenceItem) ->
-    unless _.isArray(items)
+    unless Array.isArray(items)
       items = [items]
 
     unless items.length
@@ -476,7 +472,7 @@ class Outline
   #
   # - `items` {Item} or {Item} {Array} to remove.
   removeItems: (items) ->
-    unless _.isArray(items)
+    unless Array.isArray(items)
       items = [items]
 
     unless items.length > 0

@@ -29,7 +29,7 @@ class ItemPath
 
   @evaluate: (itemPath, contextItem, options) ->
     options ?= {}
-    if _.isString itemPath
+    if typeof itemPath is 'string'
       itemPath = new ItemPath itemPath, options
     itemPath.options = options
     results = itemPath.evaluate contextItem
@@ -306,7 +306,7 @@ class ItemPath
 
     evaluatedValue = predicate[cacheName]
     unless evaluatedValue
-      if _.isArray(value)
+      if value instanceof Array
         evaluatedValue = @evaluateFunction(value, item)
         cacheName = null
       else
@@ -518,7 +518,7 @@ class ItemPath
   valueToString: (value) ->
     return unless value
 
-    if _.isArray(value)
+    if value instanceof Array
       functionName = value[0]
       if functionName is 'getAttribute'
         '@' + value.slice(1).join(':')

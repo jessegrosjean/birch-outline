@@ -82,7 +82,7 @@ class ItemSerializer
   #   * `endOffset` (optional) {Number} (default: lastItem.bodyString.length) Offset from end of last item to end at.
   #   * `expandedItems` (optional) {Item} {Array} of expanded items
   @serializeItems: (items, options={}) ->
-    if _.isString(options)
+    if typeof options is 'string'
       options = type: options
 
     firstItem = items[0]

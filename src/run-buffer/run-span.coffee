@@ -1,6 +1,5 @@
+{ assert, shallowObjectEqual } = require '../util'
 Span = require '../span-buffer/span'
-_ = require 'underscore-plus'
-{ assert } = require '../util'
 
 # Still trying to figure this out. Isn't really an issue for TaskPaper format,
 # but becomes an issue when serializaing to HTML. Question... how do you map
@@ -8,14 +7,14 @@ _ = require 'underscore-plus'
 # that case? Maybe should make that translation immediatly... not sure! :)
 validateAttributes = (attributes) ->
   for attribute, value of attributes
-    assert(_.isString(attribute), "Expected #{attribute} to be string")
+    assert(typeof attribute is 'string', "Expected #{attribute} to be string")
     if value
       if _.isObject(value)
         for attribute, value of value
-          assert(_.isString(attribute), "Expected #{attribute} to be string")
-          assert(_.isString(value), "Expected #{value} to be string")
+          assert(typeof attribute is 'string', "Expected #{attribute} to be string")
+          assert(typeof value is 'string', "Expected #{value} to be string")
       else
-        assert(_.isString(value), "Expected #{value} to be string")
+        assert(typeof value is 'string', "Expected #{value} to be string")
 
 class RunSpan extends Span
 
@@ -27,7 +26,7 @@ class RunSpan extends Span
 
   clone: ->
     clone = super()
-    clone.attributes = _.clone(@attributes)
+    clone.attributes = Object.assign({}, @attributes)
     clone
 
   ###
@@ -37,7 +36,7 @@ class RunSpan extends Span
   ###
 
   setAttributes: (attributes={}) ->
-    @attributes = _.clone(attributes)
+    @attributes = Object.assign({}, attributes)
     #validateAttributes(@attributes)
 
   addAttribute: (attribute, value) ->
@@ -53,7 +52,7 @@ class RunSpan extends Span
     delete @attributes[attribute]
 
   mergeWithSpan: (run) ->
-    if _.isEqual(@attributes, run.attributes)
+    if shallowObjectEqual(@attributes, run.attributes)
       @setString(@string + run.string)
       true
     else

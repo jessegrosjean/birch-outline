@@ -440,7 +440,7 @@ class Item
   # - `children` {Item} or {Array} of {Item}s to insert.
   # - `referenceSibling` (optional) The referenced sibling {Item} to insert before.
   insertChildrenBefore: (children, referenceSibling, maintainIndentHack=false) ->
-    unless _.isArray(children)
+    unless Array.isArray(children)
       children = [children]
 
     unless children.length
@@ -510,7 +510,7 @@ class Item
   #
   # - `children` {Item} or {Array} of child {Item}s to remove.
   removeChildren: (children) ->
-    unless _.isArray(children)
+    unless Array.isArray(children)
       children = [children]
 
     unless children.length
@@ -604,11 +604,11 @@ class Item
   # Returns attribute value.
   getAttribute: (name, clazz, array) ->
     if value = @attributes?[name]
-      if array and _.isString(value)
+      if array and (typeof value is 'string')
         value = value.split /\s*,\s*/
         if clazz
           value = (Item.attributeValueStringToObject(each, clazz) for each in value)
-      else if clazz and _.isString(value)
+      else if clazz and (typeof value is 'string')
         value = Item.attributeValueStringToObject value, clazz
     value
 
@@ -679,18 +679,22 @@ class Item
         value
 
   @objectToAttributeValueString: (object) ->
-    if _.isNumber object
-      object.toString()
-    else if _.isString object
-      object
-    else if _.isDate object
-      object.toISOString()
-    else if _.isArray object
-      (Item.objectToAttributeValueString(each) for each in object).join ','
-    else if object
-      object.toString()
-    else
-      object
+    switch typeof object
+      when 'string'
+        object
+      when 'number'
+        object.toString()
+      when 'object'
+        object.toString()
+      else
+        if object instanceof Date
+          object.toISOString()
+        else if Array.isArray(object)
+          (Item.objectToAttributeValueString(each) for each in object).join ','
+        else if object
+          object.toString()
+        else
+          object
 
   ###
   Section: Item Body Text

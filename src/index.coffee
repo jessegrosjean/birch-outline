@@ -7,7 +7,7 @@ module.exports =
   ItemPath: require './item-path'
   DateTime: require './date-time'
   AttributedString: require './attributed-string'
-
+  Extensions: require './extensions'
 
   # Private exports
   ItemPathQuery: require './item-path-query'

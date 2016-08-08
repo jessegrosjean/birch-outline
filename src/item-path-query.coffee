@@ -1,4 +1,5 @@
 {Emitter, CompositeDisposable} = require 'event-kit'
+util = require './util'
 _ = require 'underscore-plus'
 
 # Private: A live query.
@@ -114,7 +115,7 @@ class ItemPathQuery
   run: ->
     if @started
       nextResults = @queryFunction(@outline, @contextItem, @itemPath, @options)
-      unless _.isEqual(@results, nextResults)
+      unless util.shallowArrayEqual(@results, nextResults)
         @results = nextResults
         @emitter.emit 'did-change', @results
 
