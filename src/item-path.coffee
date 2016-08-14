@@ -306,7 +306,7 @@ class ItemPath
 
     evaluatedValue = predicate[cacheName]
     unless evaluatedValue
-      if value instanceof Array
+      if Array.isArray(value)
         evaluatedValue = @evaluateFunction(value, item)
         cacheName = null
       else
@@ -518,7 +518,7 @@ class ItemPath
   valueToString: (value) ->
     return unless value
 
-    if value instanceof Array
+    if Array.isArray(value)
       functionName = value[0]
       if functionName is 'getAttribute'
         '@' + value.slice(1).join(':')
