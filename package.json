@@ -22,7 +22,7 @@
     "underscore-plus": "^1.6.6"
   },
   "devDependencies": {
-    "birch-doc": "0.2.0",
+    "birch-doc": "0.0.2",
     "chai": "^3.5.0",
     "coffee-script": "^1.7.0",
     "gulp": "^3.9.1",
