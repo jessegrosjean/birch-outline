@@ -31,10 +31,7 @@ describe 'TEXT Serialization', ->
     one.depth.should.equal(1)
     one.bodyString.should.equal('one')
     one.descendants.length.should.equal(5)
-    #one.firstChild.firstChild.hasAttribute('data-t').should.be.true
-    #one.firstChild.lastChild.hasAttribute('data-t').should.be.true
     one.lastChild.bodyString.should.equal('five')
-    #one.lastChild.lastChild.getAttribute('data-t').should.equal('23')
     one.lastChild.lastChild.indent.should.equal(2)
     one.lastChild.lastChild.depth.should.equal(4)
 
@@ -115,3 +112,8 @@ describe 'TEXT Serialization', ->
     serializedItems.should.equal('\t\tone')
     roots = ItemSerializer.deserializeItems(serializedItems, outline, type: ItemSerializer.TEXTType)
     roots[0].depth.should.equal(3)
+
+    it 'should reload empty serialization', ->
+      outline.reloadSerialization('')
+      outline.root.descendants.length.should.equal(1)
+

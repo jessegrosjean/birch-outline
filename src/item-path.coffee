@@ -1,6 +1,7 @@
 ItemPathParser = require './item-path-parser'
 DateTime = require './date-time'
 _ = require 'underscore-plus'
+Item = require './item'
 
 module.exports=
 class ItemPath
@@ -38,6 +39,7 @@ class ItemPath
 
   constructor: (@pathExpressionString, @options) ->
     @options ?= {}
+    @itemToRowMap = new Map
     parsed = @constructor.parse(@pathExpressionString, undefined, @options.types)
     @pathExpressionAST = parsed.parsedPath
     @pathExpressionKeywords = parsed.keywords
@@ -49,10 +51,13 @@ class ItemPath
 
   evaluate: (item) ->
     @now = new Date
+    @itemToRowMap.clear()
     if @pathExpressionAST
-      @evaluatePathExpression @pathExpressionAST, item
+      result = @evaluatePathExpression @pathExpressionAST, item
     else
-      []
+      result = []
+    @itemToRowMap.clear()
+    result
 
   evaluatePathExpression: (pathExpressionAST, item) ->
     union = pathExpressionAST.union
@@ -72,6 +77,18 @@ class ItemPath
     @sliceResultsFrom pathExpressionAST.slice, results, 0
 
     results
+
+  rowForItem: (item) ->
+    if @itemToRowMap.size is 0
+      root = item.outline.root
+      @itemToRowMap.set(root.id, -1)
+      each = root.firstChild
+      row = 0
+      while each
+        @itemToRowMap.set(each.id, row)
+        each = each.nextItem
+        row++
+    @itemToRowMap.get(item.id)
 
   unionOutlineOrderedResults: (results1, results2, outline) ->
     results = []
@@ -96,7 +113,7 @@ class ItemPath
         i++
         j++
       else
-        if r1.row < r2.row
+        if @rowForItem(r1) < @rowForItem(r2)
           results.push(r1)
           i++
         else
@@ -128,7 +145,7 @@ class ItemPath
         i++
         j++
       else
-        if r1.row < r2.row
+        if @rowForItem(r1) < @rowForItem(r2)
           i++
         else
           j++
@@ -144,9 +161,11 @@ class ItemPath
       r1 = results1[i]
       r2 = results2[j]
 
-      while r1 and r2 and (r1.row > r2.row)
-        j++
-        r2 = results2[j]
+      if r1 and r2
+        r1Row = @rowForItem(r1)
+        while r2 and (r1Row > @rowForItem(r2))
+          j++
+          r2 = results2[j]
 
       unless r1
         return results
@@ -334,7 +353,10 @@ class ItemPath
       when 'text'
         item.bodyString
       else
-        item.getAttribute 'data-' + attributeName
+        if value = item.getAttribute(attributeName)
+          value
+        else
+          item.getAttribute 'data-' + attributeName
 
   evaluateCountFunction: (pathExpressionAST, item) ->
     '' + @evaluatePathExpression(pathExpressionAST, item).length
@@ -345,7 +367,7 @@ class ItemPath
     else if modifier is 'n'
       parseFloat(value)
     else if modifier is 'd'
-      DateTime.parse(value).getTime()
+      DateTime.parse(value)?.getTime()
     else if modifier is 's'
       value
     else

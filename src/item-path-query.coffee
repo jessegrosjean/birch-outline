@@ -123,5 +123,5 @@ class ItemPathQuery
   Section: Getting Query Results
   ###
 
-  # Public: Read-only {Array} of matching {Items}.
+  # Public: Read-only {Array} of matching {Item}s.
   results: []

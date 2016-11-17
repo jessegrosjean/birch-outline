@@ -52,17 +52,17 @@ describe 'BML Serialization', ->
 
   describe 'Serialization', ->
     it 'should serialize items to BML string', ->
-      ItemSerializer.serializeItems(outline.root.descendants).should.equal(fixtureAsBMLString)
+      ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.BMLType).should.equal(fixtureAsBMLString)
 
     it 'should only serialize non default indents', ->
       one.setAttribute('indent', 1)
-      ItemSerializer.serializeItems(outline.root.descendants).should.equal(fixtureAsBMLString)
+      ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.BMLType).should.equal(fixtureAsBMLString)
       one.setAttribute('indent', 2)
-      ItemSerializer.serializeItems(outline.root.descendants).should.not.equal(fixtureAsBMLString)
+      ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.BMLType).should.not.equal(fixtureAsBMLString)
 
   describe 'Deserialization', ->
     it 'should load items from BML string', ->
-      one = ItemSerializer.deserializeItems(fixtureAsBMLString, outline)[0]
+      one = ItemSerializer.deserializeItems(fixtureAsBMLString, outline, type: ItemSerializer.BMLType)[0]
       one.depth.should.equal(1)
       one.bodyString.should.equal('one')
       one.descendants.length.should.equal(5)
@@ -74,7 +74,7 @@ describe 'BML Serialization', ->
     it 'reload outline from BML string', ->
       out = new Outline()
       out.reloadSerialization(fixtureAsBMLString, type: ItemSerializer.BMLType)
-      ItemSerializer.serializeItems(outline.root.descendants).should.equal(fixtureAsBMLString)
+      ItemSerializer.serializeItems(outline.root.descendants, type: ItemSerializer.BMLType).should.equal(fixtureAsBMLString)
 
     it 'should throw exception when loading invalid html outline UL child', ->
       bmlString = '''
@@ -82,7 +82,7 @@ describe 'BML Serialization', ->
           <div>bad</div>
         </ul>
       '''
-      (-> ItemSerializer.deserializeItems(bmlString, outline)).should.throw("Expected 'LI' or 'UL', but got div")
+      (-> ItemSerializer.deserializeItems(bmlString, outline, type: ItemSerializer.BMLType)).should.throw("Expected 'LI' or 'UL', but got div")
 
     it 'should throw exception when loading invalid html outline LI child', ->
       bmlString = '''
@@ -90,7 +90,7 @@ describe 'BML Serialization', ->
           <li>bad</li>
         </ul>
       '''
-      (-> ItemSerializer.deserializeItems(bmlString, outline)).should.throw("Expected 'P', but got undefined")
+      (-> ItemSerializer.deserializeItems(bmlString, outline, type: ItemSerializer.BMLType)).should.throw("Expected 'P', but got undefined")
 
     it 'should throw exception when loading invalid html outline P contents', ->
       bmlString = '''
@@ -98,4 +98,4 @@ describe 'BML Serialization', ->
           <li><p>o<dog>n</dog>e</p></li>
         </ul>
       '''
-      (-> ItemSerializer.deserializeItems(bmlString, outline)).should.throw("Unexpected tagName 'dog' in 'P'")
+      (-> ItemSerializer.deserializeItems(bmlString, outline, type: ItemSerializer.BMLType)).should.throw("Unexpected tagName 'dog' in 'P'")

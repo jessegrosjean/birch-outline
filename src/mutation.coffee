@@ -86,8 +86,8 @@ class Mutation
   @createChildrenMutation: (target, addedItems, removedItems, previousSibling, nextSibling) ->
     assert(addedItems.length > 0 or removedItems.length > 0, 'Children added or removed')
     mutation = new Mutation target, Mutation.CHILDREN_CHANGED
-    mutation.addedItems = addedItems or []
-    mutation.removedItems = removedItems or []
+    mutation.addedItems = addedItems?.slice() or []
+    mutation.removedItems = removedItems?.slice() or []
     mutation.previousSibling = previousSibling
     mutation.nextSibling = nextSibling
     mutation
@@ -149,7 +149,7 @@ class Mutation
           @target.removeChildren @addedItems
 
         if @removedItems.length
-          @target.insertChildrenBefore @removedItems, @nextSibling
+          @target.insertChildrenBefore @removedItems, @nextSibling, true
 
   coalesce: (operation) ->
     return false unless operation instanceof Mutation

@@ -81,16 +81,16 @@ class ItemSerializer
   #   * `startOffset` (optional) {Number} (default: 0) Offset into first into to start at.
   #   * `endOffset` (optional) {Number} (default: lastItem.bodyString.length) Offset from end of last item to end at.
   #   * `expandedItems` (optional) {Item} {Array} of expanded items
-  @serializeItems: (items, options={}) ->
-    if typeof options is 'string'
-      options = type: options
+  @serializeItems: (items, options={}, legacyOptions) ->
+    if typeof legacyOptions is 'string'
+      options = type: legacyOptions
 
     firstItem = items[0]
     lastItem = items[items.length - 1]
 
-    options.type ?= ItemSerializer.BMLType
+    options.type ?= items[0]?.outline.type ? ItemSerializer.BMLType
     options.startOffset ?= 0
-    options.endOffset ?= lastItem.bodyString.length
+    options.endOffset ?= lastItem?.bodyString.length ? 0
     options.baseDepth ?= Number.MAX_VALUE
 
     serialization = (each for each in @getSerializationsForType(options['type']) when each.beginSerialization)[0]
@@ -147,9 +147,11 @@ class ItemSerializer
   # - `options` Deserialization options.
   #   * `type` (optional) {String} (default: ItemSerializer.TEXTType)
   #
-  # Returns {Array} of {Items}.
+  # Returns {Array} of {Item}s.
   @deserializeItems: (serializedItems, outline, options={}) ->
-    options['type'] ?= ItemSerializer.BMLType
+    if typeof options is 'string'
+      options = type: options
+    options['type'] ?= outline.type ? ItemSerializer.BMLType
     serialization = (each for each in @getSerializationsForType(options['type']) when each.deserializeItems)[0]
     serialization.deserializeItems(serializedItems, outline, options)
 
@@ -179,6 +181,12 @@ ItemSerializer.registerSerialization
 
 ItemSerializer.registerSerialization
   priority: 4
+  extensions: []
+  types: ['NSFilenamesPboardType']
+  serialization: require('./serializations/paths')
+
+ItemSerializer.registerSerialization
+  priority: 5
   extensions: []
   types: [ItemSerializer.TEXTType]
   serialization: require('./serializations/text')

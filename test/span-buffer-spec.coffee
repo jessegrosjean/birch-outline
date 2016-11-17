@@ -216,65 +216,65 @@ describe 'SpanBuffer', ->
   xdescribe 'Performance', ->
 
     it 'should handle 10,000 spans', ->
-      console.profile('Create Spans')
+      console.profile?('Create Spans')
       console.time('Create Spans')
       spanCount = 10000
       spans = []
       for i in [0..spanCount - 1]
         spans.push(spanIndex.createSpan('hello world!'))
       console.timeEnd('Create Spans')
-      console.profileEnd()
+      console.profileEnd?()
 
-      console.profile('Batch Insert Spans')
+      console.profile?('Batch Insert Spans')
       console.time('Batch Insert Spans')
       spanIndex.insertSpans(0, spans)
       spanIndex.getSpanCount().should.equal(spanCount)
       spanIndex.getLength().should.equal(spanCount * 'hello world!'.length)
       console.timeEnd('Batch Insert Spans')
-      console.profileEnd()
+      console.profileEnd?()
 
-      console.profile('Batch Remove Spans')
+      console.profile?('Batch Remove Spans')
       console.time('Batch Remove Spans')
       spanIndex.removeSpans(0, spanIndex.getSpanCount())
       spanIndex.getSpanCount().should.equal(0)
       spanIndex.getLength().should.equal(0)
       console.timeEnd('Batch Remove Spans')
-      console.profileEnd()
+      console.profileEnd?()
 
       getRandomInt = (min, max) ->
         Math.floor(Math.random() * (max - min)) + min
 
-      console.profile('Random Insert Spans')
+      console.profile?('Random Insert Spans')
       console.time('Random Insert Spans')
       for each in spans
         spanIndex.insertSpans(getRandomInt(0, spanIndex.getSpanCount()), [each])
       spanIndex.getSpanCount().should.equal(spanCount)
       spanIndex.getLength().should.equal(spanCount * 'hello world!'.length)
       console.timeEnd('Random Insert Spans')
-      console.profileEnd()
+      console.profileEnd?()
 
-      console.profile('Random Insert Text')
+      console.profile?('Random Insert Text')
       console.time('Random Insert Text')
       for i in [0..spanCount - 1]
         spanIndex.insertString(getRandomInt(0, spanIndex.getLength()), 'Hello')
       spanIndex.getLength().should.equal(spanCount * 'hello world!Hello'.length)
       console.timeEnd('Random Insert Text')
-      console.profileEnd()
+      console.profileEnd?()
 
-      console.profile('Random Access Spans')
+      console.profile?('Random Access Spans')
       console.time('Random Access Spans')
       for i in [0..spanCount - 1]
         start = getRandomInt(0, spanIndex.getSpanCount())
         end = getRandomInt(start, Math.min(start + 100, spanIndex.getSpanCount()))
         spanIndex.getSpans(start, end - start)
       console.timeEnd('Random Access Spans')
-      console.profileEnd()
+      console.profileEnd?()
 
-      console.profile('Random Remove Spans')
+      console.profile?('Random Remove Spans')
       console.time('Random Remove Spans')
       for each in spans
         spanIndex.removeSpans(getRandomInt(0, spanIndex.getSpanCount()), 1)
       spanIndex.getSpanCount().should.equal(0)
       spanIndex.getLength().should.equal(0)
       console.timeEnd('Random Remove Spans')
-      console.profileEnd()
+      console.profileEnd?()

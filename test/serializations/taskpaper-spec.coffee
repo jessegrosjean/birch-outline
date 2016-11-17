@@ -89,6 +89,12 @@ describe 'TaskPaper', ->
       one.bodyString.should.equal('one @jesse(\\(hello\\))')
       one.getAttribute('data-jesse').should.equal('(hello)')
 
+    it 'should separate content from trailing tags', ->
+      one.bodyString = 'one @done'
+      one.bodyHighlightedAttributedString.toString().should.equal('(one/content:"")( )(@done/link:"filter://@done"/tag:"data-done"/tagname:"data-done")')
+      one.bodyString = 'one @done '
+      one.bodyHighlightedAttributedString.toString(false).should.equal('(one/content:"")( )(@done/link:"filter://@done"/tag:"data-done"/tagname:"data-done")( )')
+
     it 'should undo sync body text to attribute', ->
       one.bodyString = '@jesse(washere)'
       outline.undoManager.undo()
@@ -173,6 +179,12 @@ describe 'TaskPaper', ->
       outline.undoManager.redo()
       one.bodyString.should.equal('one:')
       one.getAttribute('data-type').should.equal('project')
+
+    it 'should ignore trailing tags when get/set by body content', ->
+      six.bodyContentString.should.equal('six')
+      six.bodyContentString = 'moose'
+      six.bodyContentString.should.equal('moose')
+      six.bodyString.should.equal('moose @t(23)')
 
     describe 'Inline Syntax Highlighting', ->
 

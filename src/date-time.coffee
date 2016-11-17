@@ -9,27 +9,33 @@ class DateTime
   #
   # - `string` The date/time {String}.
   #
-  # Returns {Date}.
+  # Returns {Date} or null.
   @parse: (string) ->
     try
       return DateTimeParser.parse(string, moment: moment).toDate()
     catch e
-      return new Date(string)
+      m = moment(string, moment.ISO_8601, true)
+      if m.isValid()
+        m.toDate()
+      else
+        null
 
   # Public: Format the given date/time {String} or {Date} as a minimal absolute date/time {String}.
   #
   # - `dateOrString` The date/time {String} or {Date} to format.
   #
   # Returns {String}.
-  @format: (dateOrString) ->
+  @format: (dateOrString, showMillisecondsIfNeeded=true, showSecondsIfNeeded=true) ->
     try
       m = DateTimeParser.parse(dateOrString, moment: moment)
     catch e
-      m = moment(dateOrString)
+      m = moment(dateOrString, moment.ISO_8601, true)
+      if not m.isValid()
+        return 'invalid date'
 
-    if m.milliseconds()
+    if m.milliseconds() and showMillisecondsIfNeeded
       m.format('YYYY-MM-DD HH:mm:ss:SSS')
-    else if m.seconds()
+    else if m.seconds() and showSecondsIfNeeded
       m.format('YYYY-MM-DD HH:mm:ss')
     else if m.hours() or m.minutes()
       m.format('YYYY-MM-DD HH:mm')

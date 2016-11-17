@@ -56,6 +56,7 @@ Item = require './item'
 class Outline
 
   type: null
+  metadata: null
   idsToItems: null
   retainCount: 0
   changes: null
@@ -77,13 +78,14 @@ class Outline
   # - `serialization` (optional) {String} Serialized outline content of `type` to load.
   constructor: (type, serialization) ->
     @id = shortid()
+    @metadata = new Map()
     @idsToItems = new Map()
+    @branchContentIDsToItems = null
     @type = type ? ItemSerializer.TEXTType
     @root = @createItem '', Birch.RootID
     @root.isInOutline = true
     @changeDelegateProcessing = 0
     @changeDelegate = ItemSerializer.getSerializationsForType(@type)[0]?.changeDelegate
-
     @undoManager = undoManager = new UndoManager
     @emitter = new Emitter
 
@@ -102,7 +104,8 @@ class Outline
       @updateChangeCount(Outline.ChangeRedone)
       @breakUndoCoalescing()
 
-    @reloadSerialization(serialization)
+    if serialization
+      @reloadSerialization(serialization)
 
   # Public: Returns a TaskPaper {Outline}.
   #
@@ -118,6 +121,8 @@ class Outline
   destroy: ->
     unless @destroyed
       @undoSubscriptions?.dispose()
+      @undoManager?.removeAllActions()
+      @undoManager.disableUndoRegistration()
       @destroyed = true
       @emitter.emit 'did-destroy'
 
@@ -181,6 +186,37 @@ class Outline
     this
 
   ###
+  Section: Metadata
+  ###
+
+  getMetadata: (key) ->
+    @metadata.get(key)
+
+  setMetadata: (key, value) ->
+    if value
+      try
+        JSON.stringify(value)
+        @metadata.set(key, value)
+      catch e
+        console.log("value: #{value} not JSON serializable #{e}")
+    else
+      @metadata.delete(key)
+    @updateChangeCount(Outline.ChangeDone)
+
+  serializedMetadata: null
+  Object.defineProperty @::, 'serializedMetadata',
+    get: ->
+      metadata = {}
+      @metadata.forEach (value, key) ->
+        metadata[key] = value
+      JSON.stringify(metadata)
+    set: (jsonMetadata) ->
+      if metadata = JSON.parse(jsonMetadata)
+        @metadata = new Map()
+        for each in Object.keys(metadata)
+          @setMetadata(each, metadata[each])
+
+  ###
   Section: Events
   ###
 
@@ -233,6 +269,12 @@ class Outline
   onDidUpdateChangeCount: (callback) ->
     @emitter.on 'did-update-change-count', callback
 
+  onWillReload: (callback) ->
+    @emitter.on 'will-reload', callback
+
+  onDidReload: (callback) ->
+    @emitter.on 'did-reload', callback
+
   # Public: Invoke the given callback when the outline is destroyed.
   #
   # - `callback` {Function} to be called when the outline is destroyed.
@@ -279,6 +321,15 @@ class Outline
         items.push each
     items
 
+  getItemForBranchContentID: (contentID) ->
+    unless @branchContentIDsToItems
+      @branchContentIDsToItems = new Map()
+      for each in @root.descendants
+        @branchContentIDsToItems.set(each.branchContentID, each)
+    @branchContentIDsToItems.get(contentID)
+
+  getItemForFuzzyContentID: (fuzzyContentID) ->
+
   getAttributeNames: (autoIncludeAttributes=[], excludeAttributes=[]) ->
     attributes = new Set()
 
@@ -300,8 +351,10 @@ class Outline
     @getAttributeNames(autoIncludeAttributes, excludeAttributes).filter (each) ->
       each.substring(0, 5) is 'data-'
 
-  # Public: Evaluate the item path starting from this outline's {Outline.root}
-  # item or from the passed in `contextItem` if present.
+  # Public: Evaluate the [item path
+  # search](https://guide.taskpaper.com/reference/searches/) starting from
+  # this outline's {Outline.root} item or from the passed in `contextItem` if
+  # present.
   #
   # - `itemPath` {String} itempath expression.
   # - `contextItem` (optional) defaults to {Outline.root}.
@@ -508,7 +561,7 @@ class Outline
     # 2. Save item that reinserted items should be reinserted before.
     insertBefore = coveredItems[coveredItems.length - 1].nextBranch
 
-    # 3. Figure out which items should be reinserted and save there depths.
+    # 3. Figure out which items should be reinserted.
     removeItemsSet = new Set()
     for each in items
       removeItemsSet.add(each)
@@ -517,14 +570,10 @@ class Outline
       unless removeItemsSet.has(each)
         reinsertChildren.push(each)
 
-    # 4. Remove items to reinsert before removing items. This way undo will
-    # work. since the parents are still in the tree.
-    Item.removeItemsFromParents(reinsertChildren)
-
-    # 5. Remove the items that are actually meant to be removed.
+    # 4. Remove the items that are actually meant to be removed.
     Item.removeItemsFromParents(items)
 
-    # 6. Reinsert!
+    # 5. Reinsert items that shouldn't have been removed
     @insertItemsBefore(reinsertChildren, insertBefore)
 
   ###
@@ -612,6 +661,7 @@ class Outline
     @changesCallbacks.push(callback) if callback
     @changingCount--
     if @changingCount is 0
+      @branchContentIDsToItems = null
       @emitter.emit('did-end-changes', @changes)
       changesCallbacks = @changesCallbacks
       @changesCallbacks = null
@@ -671,6 +721,12 @@ class Outline
   Section: Serialization
   ###
 
+  serializeItems: (items, options={}) ->
+    ItemSerializer.serializeItems(items, options)
+
+  deserializeItems: (serializedItems, options={}) ->
+    ItemSerializer.deserializeItems(serializedItems, @, options)
+
   # Public: Return a serialized {String} version of this Outline's content.
   #
   # - `options` (optional) Serialization options as defined in `{ItemSerializer.serializeItems}.
@@ -679,18 +735,22 @@ class Outline
     options['type'] ?= @type
     ItemSerializer.serializeItems(@root.descendants, options)
 
-  # Public: Load {String}
+  # Public: Reload the content of this outline using the given string serilaization.
   #
+  # - `serialization` {String} outline serialization.
   # - `options` (optional) Deserialization options as defined in `{ItemSerializer.deserializeItems}.
   #   `type` key defaults to {outline::type}.
   reloadSerialization: (serialization, options={}) ->
-    if serialization
+    if serialization?
       options['type'] ?= @type
       @emitter.emit 'will-reload'
+      @undoManager.removeAllActions()
+      @undoManager.disableUndoRegistration()
       @groupChanges =>
         items = ItemSerializer.deserializeItems(serialization, @, options)
         @root.removeChildren(@root.children)
         @root.appendChildren(items)
+      @undoManager.enableUndoRegistration()
       @updateChangeCount(Outline.ChangeCleared)
       @emitter.emit 'did-reload'
 

@@ -1,9 +1,12 @@
 AttributedString = require './attributed-string'
+stringHash = require 'string-hash'
 DateTime = require './date-time'
 ItemPath = require './item-path'
 Mutation = require './mutation'
 _ = require 'underscore-plus'
 { assert } = require './util'
+ctphHash = require 'ctph.js'
+
 
 # Public: A paragraph of text in an {Outline}.
 #
@@ -58,14 +61,17 @@ class Item
 
   constructor: (outline, text, id, remappedIDCallback) ->
     @id = outline.nextOutlineUniqueItemID(id)
+    @cachedBranchContentID = null
     @outline = outline
     @inOutline = false
+    @recordedUndoableChanges = false
     @bodyHighlighted = null
 
     if text instanceof AttributedString
       @body = text
     else
       @body = new AttributedString(text)
+
 
     outline.itemDidChangeBody(this, '')
 
@@ -79,6 +85,29 @@ class Item
 
   # Public: Read-only unique {String} identifier.
   id: null
+
+  contentID: null
+  Object.defineProperty @::, 'contentID',
+    get: ->
+      stringHash(@bodyString)
+
+  branchContentID: null
+  Object.defineProperty @::, 'branchContentID',
+    get: ->
+      unless @cachedBranchContentID
+        childBranchContentIDs = [@contentID]
+        each = @firstChild
+        while each
+          childBranchContentIDs.push(each.branchContentID)
+          each = each.nextSibling
+        @cachedBranchContentID = "#{stringHash(childBranchContentIDs.join(''))}"
+      @cachedBranchContentID
+
+  clearCachedBranchContentID: ->
+    each = @
+    while each
+      each.cachedBranchContentID = null
+      each = each.parent
 
   # Public: Read-only {Outline} that this item belongs to.
   outline: null
@@ -107,6 +136,9 @@ class Item
     set: (isInOutline) ->
       unless @inOutline is isInOutline
         if isInOutline
+          # After an item is first added to outline start recording undoable
+          # changes for remainder of items existance.
+          @recordedUndoableChanges = true
           @outline.idsToItems.set(@id, @)
         else
           @outline.idsToItems.delete(@id)
@@ -317,43 +349,50 @@ class Item
 
     commonAncestors
 
-  @_insertGroup: (group, groupDepth, stack, roots) ->
-    top = stack[stack.length - 1]
-    while top and top.depth > groupDepth
-      top = stack.pop()
-
-    if top and top.depth is groupDepth
-      parent = top.parent
-    else
-      stack.push(top)
-      parent = top
-
-    if parent
-      for each in group
-        each.indent = groupDepth - parent.depth
-      parent.insertChildrenBefore(group, null, true)
-    else
-      for each in group
-        roots.push(each)
-
-    stack.push(group[group.length - 1])
-
-  @buildItemHiearchy: (items, stack=[]) ->
+  # Build tree by processing items in order and builing structure based on
+  # item depth. Build efficiently, single call to insertChildrenBefore for
+  # each parent.
+  @buildItemHiearchy: (items, parentStack=[]) ->
     Item.removeItemsFromParents(items)
 
     roots = []
+    siblingsStack = []
+
+    insertSiblings = (siblings) ->
+      if siblings.parent
+        parentDepth = siblings.parent.depth
+        siblingsDepth = siblings.depth
+        siblingsIndent = siblingsDepth - parentDepth
+        for each in siblings
+          each.indent = siblingsIndent
+        siblings.parent.insertChildrenBefore(siblings, null, true)
+      else
+        roots = roots.concat(siblings)
 
     for each in items
-      if groupDepth is each.depth
-        group.push(each)
-      else
-        if group
-          @_insertGroup(group, groupDepth, stack, roots)
-        groupDepth = each.depth
-        group = [each]
+      eachDepth = each.depth
 
-    if group
-      @_insertGroup(group, groupDepth, stack, roots)
+      while (siblings = siblingsStack[siblingsStack.length - 1]) and siblings.depth > eachDepth
+        insertSiblings(siblings)
+        siblingsStack.pop()
+
+      if siblings and siblings.depth is eachDepth
+        siblings.push(each)
+      else
+        while (parent = parentStack[parentStack.length - 1]) and parent.depth >= eachDepth
+          parentStack.pop()
+
+        newGroup = [each]
+        newGroup.parent = parent
+        newGroup.depth = eachDepth
+        siblingsStack.push(newGroup)
+
+      parentStack.push(each)
+
+    while siblingsStack.length
+      siblings = siblingsStack[siblingsStack.length - 1]
+      insertSiblings(siblings)
+      siblingsStack.pop()
 
     roots
 
@@ -365,22 +404,22 @@ class Item
         for eachDescendant in each.descendants
           flattenedItems.push(eachDescendant)
     if removeFromParents
-      each.removeFromParent() for each in flattenedItems
+      @removeItemsFromParents(flattenedItems)
     flattenedItems
 
   # Removes items efficiently in minimal number of mutations. Assumes that
-  # items are in continiguous outline order. Processes items in reverse order
-  # so that children are removed first, to better maintain undo stack.
+  # items are in continiguous outline order.
   @removeItemsFromParents: (items) ->
     siblings = []
-    next = null
-    for each in items by -1
-      if not next or next.previousSibling is each
-        siblings.unshift(each)
-      else
-        siblings[0].parent?.removeChildren(siblings)
-        siblings = [each]
-      next = each
+    previous = null
+    for each in items
+      if each.parent?
+        if not previous or previous.nextSibling is each
+          siblings.push(each)
+        else
+          siblings[0].parent?.removeChildren(siblings)
+          siblings = [each]
+        previous = each
     if siblings.length
       siblings[0].parent?.removeChildren(siblings)
 
@@ -446,11 +485,14 @@ class Item
     unless children.length
       return
 
+    recordedUndoableChanges = @recordedUndoableChanges
     isInOutline = @isInOutline
     outline = @outline
 
     if isInOutline
       outline.beginChanges()
+
+    if recordedUndoableChanges
       outline.undoManager.beginUndoGrouping()
 
     Item.removeItemsFromParents(children)
@@ -461,9 +503,10 @@ class Item
     else
       previousSibling = @lastChild
 
-    if isInOutline
+    if isInOutline or recordedUndoableChanges
       mutation = Mutation.createChildrenMutation this, children, [], previousSibling, referenceSibling
-      outline.willChange(mutation)
+      if isInOutline
+        outline.willChange(mutation)
       outline.recordChange mutation
 
     for each, i in children
@@ -491,11 +534,15 @@ class Item
       for each in children by -1
         each.indent = childIndent
 
+    if recordedUndoableChanges
+      outline.undoManager.endUndoGrouping()
+
+    @clearCachedBranchContentID()
+
     if isInOutline
       for each in children
         each.isInOutline = true
       outline.didChange(mutation)
-      outline.undoManager.endUndoGrouping()
       outline.endChanges()
 
   # Public: Append the new children to this item's list of children.
@@ -516,6 +563,7 @@ class Item
     unless children.length
       return
 
+    recordedUndoableChanges = @recordedUndoableChanges
     isInOutline = @isInOutline
     outline = @outline
 
@@ -525,10 +573,15 @@ class Item
     nextSibling = lastChild.nextSibling
 
     if isInOutline
-      mutation = Mutation.createChildrenMutation this, [], children, previousSibling, nextSibling
-      outline.willChange(mutation)
       outline.beginChanges()
+
+    if recordedUndoableChanges
       outline.undoManager.beginUndoGrouping()
+
+    if isInOutline or recordedUndoableChanges
+      mutation = Mutation.createChildrenMutation this, [], children, previousSibling, nextSibling
+      if isInOutline
+        outline.willChange(mutation)
       outline.recordChange mutation
 
     previousSibling?.nextSibling = nextSibling
@@ -549,9 +602,13 @@ class Item
       each.parent = null
       each.indent = eachIndent + depth
 
+    if recordedUndoableChanges
+      outline.undoManager.endUndoGrouping()
+
+    @clearCachedBranchContentID()
+
     if isInOutline
       outline.didChange(mutation)
-      outline.undoManager.endUndoGrouping()
       outline.endChanges()
 
   # Public: Remove this item from it's parent item if it has a parent.
@@ -639,11 +696,16 @@ class Item
 
     outline = @outline
     undoManager = outline.undoManager
+    recordedUndoableChanges = @recordedUndoableChanges
     isInOutline = @isInOutline
+
     if isInOutline
-      mutation = Mutation.createAttributeMutation this, name, oldValue
-      outline.willChange(mutation)
       outline.beginChanges()
+
+    if isInOutline or recordedUndoableChanges
+      mutation = Mutation.createAttributeMutation this, name, oldValue
+      if isInOutline
+        outline.willChange(mutation)
       outline.recordChange mutation
       undoManager.disableUndoRegistration()
 
@@ -660,6 +722,8 @@ class Item
     if isInOutline
       outline.didChange(mutation)
       outline.endChanges()
+
+    if isInOutline or recordedUndoableChanges
       undoManager.enableUndoRegistration()
 
   # Public: Removes an item attribute.
@@ -671,10 +735,10 @@ class Item
 
   @attributeValueStringToObject: (value, clazz) ->
     switch clazz
-      when Number
+      when Number, 'Number'
         parseFloat value
-      when Date
-        DateTime.parse(value)
+      when Date, 'Date'
+        DateTime.parse(value) ? ''
       else
         value
 
@@ -719,6 +783,12 @@ class Item
         @bodyString.substr(range.location, range.length)
       else
         @bodyString
+    set: (text='') ->
+      range = {}
+      if @bodyHighlightedAttributedString.getFirstOccuranceOfAttribute('content', null, range)?
+        @replaceBodyRange(range.location, range.length, text)
+      else
+        @bodyString = text
 
   bodyHTMLString: null
   Object.defineProperty @::, 'bodyHTMLString',
@@ -851,30 +921,43 @@ class Item
 
     bodyAttributedString = @bodyAttributedString
     oldBody = bodyAttributedString.getString()
+    recordedUndoableChanges = @recordedUndoableChanges
     isInOutline = @isInOutline
+
     outline = @outline
     undoManager = outline.undoManager
 
     assert(insertedString.indexOf('\n') is -1, 'Item body text cannot contain newlines')
     assert(location + length <= oldBody.length, 'Replace range end must not be greater then body text')
 
-    if isInOutline
+    if isInOutline or recordedUndoableChanges
       replacedText = bodyAttributedString.attributedSubstringFromRange(location, length)
       if replacedText.length is 0 and insertedText.length is 0
         return
       mutation = Mutation.createBodyMutation this, location, insertedString.length, replacedText
+
+
+    if isInOutline
       outline.willChange(mutation)
       outline.beginChanges()
+
+    if mutation
       outline.recordChange mutation
+
+    if recordedUndoableChanges
       undoManager.disableUndoRegistration()
 
     bodyAttributedString.replaceRange(location, length, insertedText)
     @bodyHighlighted = null
     outline.itemDidChangeBody(this, oldBody)
 
+    @clearCachedBranchContentID()
+
     if isInOutline
       outline.didChange(mutation)
       outline.endChanges()
+
+    if recordedUndoableChanges
       undoManager.enableUndoRegistration()
 
   # Public: Append body text.

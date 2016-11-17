@@ -5,13 +5,13 @@ mocha = require 'gulp-mocha'
 cache = require 'gulp-cached'
 coffee = require 'gulp-coffee'
 webpack = require 'webpack-stream'
-exec = require('child_process').exec
 coffeelint = require 'gulp-coffeelint'
+Renderer = require('birch-doc').Renderer
 webpackConfig = require './webpack.config'
 
 gulp.task 'clean', ->
   cache.caches = {}
-  gulp.src(['.coffee/', 'lib/', 'doc/api.md', 'min/']).pipe(clean())
+  gulp.src(['.coffee/', 'lib/', 'doc/api/', 'min/']).pipe(clean())
 
 gulp.task 'test', ->
   gulp.src(['test/**/*-spec.coffee'], read: false)
@@ -30,9 +30,8 @@ gulp.task 'coffeescript', ->
     .pipe(coffee(bare: true).on('error', gutil.log))
     .pipe(gulp.dest('lib/'))
 
-gulp.task 'doc', (cb) ->
-  exec './node_modules/atomdoc-md/bin/atomdoc-md.js generate . -o doc -n api.md', (err, stdout, stderr) ->
-    cb(err)
+gulp.task 'doc', ->
+  Renderer.renderModules(['.'], 'doc/api/', layout: 'class')
 
 gulp.task 'webpack', ['javascript', 'coffeescript'], ->
   config = Object.create(webpackConfig)

@@ -14,7 +14,7 @@ tagRegexString = "(^|\\s+)@(#{tagWordRegexString})(?:#{tagValueRegexString})?(?=
 tagRegex = new RegExp(tagRegexString, 'g')
 
 # Trailing Tags
-trailingTagsRegex = new RegExp("(#{tagRegexString})+$", 'g')
+trailingTagsRegex = new RegExp("(#{tagRegexString})+\\s*$", 'g')
 
 reservedTags =
   'data-id': true
@@ -47,7 +47,7 @@ addTag = (item, tag, value) ->
     range =
       location: item.bodyString.length
       length: 0
-  if range.location > 0
+  if range.location > 0 and not /\s+$/.test(item.bodyString)
     tagString = ' ' + tagString
   item.replaceBodyRange(range.location, range.length, tagString)
 

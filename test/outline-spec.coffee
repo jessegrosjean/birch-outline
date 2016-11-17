@@ -1,5 +1,6 @@
 loadOutlineFixture = require './load-outline-fixture'
 Outline = require '../src/outline'
+Item = require '../src/item'
 shortid = require '../src/shortid'
 should = require('chai').should()
 path = require 'path'
@@ -32,6 +33,26 @@ describe 'Outline', ->
     it 'should convert outline to TaskPaper string', ->
       taskPaperOutline.serialize().should.equal('one @t(1)\ntwo')
 
+  describe 'Metadata', ->
+
+    it 'should get/set', ->
+      should.not.exist(outline.getMetadata('key'))
+      outline.setMetadata('key', 'value')
+      outline.getMetadata('key').should.equal('value')
+      outline.setMetadata('key', null)
+      should.not.exist(outline.getMetadata('key'))
+
+    it 'should serialize', ->
+      serialized = outline.serializedMetadata
+      outline.setMetadata('key', 'value')
+      outline.serializedMetadata = serialized
+      should.not.exist(outline.getMetadata('key'))
+
+      outline.setMetadata('key', 'value')
+      serialized = outline.serializedMetadata
+      outline.serializedMetadata = serialized
+      outline.getMetadata('key').should.equal('value')
+
   it 'should create item', ->
     item = outline.createItem('hello')
     item.isInOutline.should.not.be.ok
@@ -40,6 +61,19 @@ describe 'Outline', ->
     item = outline.createItem('hello')
     outline.root.appendChildren(item)
     outline.getItemForID(item.id).should.equal(item)
+
+  it 'should get item by branch content id', ->
+    id = one.branchContentID
+    outline.getItemForBranchContentID(id).should.equal(one)
+
+  it 'should not get item by branch content id when content changes', ->
+    id = one.branchContentID
+    one.bodyString = 'goat'
+    should.not.exist(outline.getItemForBranchContentID(id))
+
+    id = one.branchContentID
+    six.removeFromParent()
+    should.not.exist(outline.getItemForBranchContentID(id))
 
   it 'should copy item', ->
     oneCopy = outline.cloneItem(one)
@@ -66,6 +100,7 @@ describe 'Outline', ->
     oneImport.lastChild.firstChild.bodyString.should.equal('six')
 
   describe 'Insert & Remove Items', ->
+
     it 'inserts items at indent level 1 by default', ->
       newItem = outline.createItem('new')
       outline.insertItemsBefore(newItem, two)
@@ -136,11 +171,20 @@ describe 'Outline', ->
       outline.removeItems([one, two])
       root.firstChild.should.equal(three)
 
+    it 'should bug case insert items', ->
+      three.indent = 2
+      outline.removeItems(two)
+      two.indent -= 1
+      outline.insertItemsBefore(two, three)
+      five.isInOutline.should.be.true
+      six.isInOutline.should.be.true
+
     it 'add items in batch in single event', ->
 
     it 'remove items in batch in single event', ->
 
   describe 'Undo', ->
+
     it 'should undo append child', ->
       child = outline.createItem('hello')
       one.appendChildren(child)
@@ -149,17 +193,31 @@ describe 'Outline', ->
 
     it 'should undo remove child', ->
       outline.undoManager.beginUndoGrouping()
+      two.depth.should.equal(2)
       one.removeChildren(two)
       outline.undoManager.endUndoGrouping()
       outline.undoManager.undo()
       two.parent.should.equal(one)
+      two.depth.should.equal(2)
+
+    it 'should undo remove over indented child', ->
+      three.indent = 3
+      three.depth.should.equal(5)
+      outline.undoManager.beginUndoGrouping()
+      two.removeChildren(three)
+      outline.undoManager.endUndoGrouping()
+      outline.undoManager.undo()
+      three.parent.should.equal(two)
+      three.depth.should.equal(5)
 
     it 'should undo move child', ->
       outline.undoManager.beginUndoGrouping()
+      six.depth.should.equal(3)
       one.appendChildren(six)
       outline.undoManager.endUndoGrouping()
       outline.undoManager.undo()
       six.parent.should.equal(five)
+      six.depth.should.equal(3)
 
     it 'should undo set attribute', ->
       one.setAttribute('myattr', 'test')
@@ -207,7 +265,8 @@ describe 'Outline', ->
         outline.undoManager.redo()
         one.bodyString.should.equal('')
 
-  xdescribe 'Performance', ->
+  describe 'Performance', ->
+
     it 'should create/copy/remove 10,000 items', ->
       # Create, copy, past a all relatively slow compared to load
       # because of time taken to generate IDs and validate that they
@@ -216,50 +275,59 @@ describe 'Outline', ->
       branch = outline.createItem('branch')
 
       itemCount = 10000
-      console.time('Create Objects')
+      console.time('Create IDs')
       items = []
       for i in [0..itemCount]
         items.push(name: shortid())
-      console.timeEnd('Create Objects')
+      console.timeEnd('Create IDs')
 
-      console.profile('Create Items')
+      console.profile?('Create Items')
       console.time('Create Items')
       items = []
       for i in [0..itemCount]
+        each = outline.createItem('hello')
         items.push(outline.createItem('hello'))
-      branch.appendChildren(items)
-      outline.root.appendChildren(branch)
       console.timeEnd('Create Items')
+      console.profileEnd?()
+
+      for each in items
+        each.indent = Math.floor(Math.random() * 3)
+
+      console.profile?('Build Item Hiearchy')
+      console.time('Build Item Hiearchy')
+      roots = Item.buildItemHiearchy(items)
+      branch.appendChildren(roots)
+      outline.root.appendChildren(branch)
       outline.root.descendants.length.should.equal(itemCount + 8)
-      console.profileEnd()
+      console.timeEnd('Build Item Hiearchy')
+      console.profileEnd?()
 
       console.time('Copy Items')
       branch.clone()
       console.timeEnd('Copy Items')
 
       console.time('Remove Items')
-      branch.removeChildren(items)
+      Item.removeItemsFromParents(items)
       console.timeEnd('Remove Items')
 
       randoms = []
       for each, i in items
         each.indent = Math.floor(Math.random() * 10)
-        #each.indent = randoms[i]
-        #randoms.push(each.indent)
-      #console.log(randoms.join(', '))
 
-      console.profile('Insert Items')
+      console.profile?('Insert Items')
       console.time('Insert Items')
       outline.insertItemsBefore(items, null)
       console.timeEnd('Insert Items')
-      console.profileEnd()
+      console.profileEnd?()
 
+    ###
     it 'should load 100,000 items', ->
-      console.profile('Load Items')
+      console.profile?('Load Items')
       console.time('Load Items')
       outline2 = new Outline()
       outline2.loadSync(path.join(__dirname, '..', 'fixtures', 'big-outline.bml'))
       console.timeEnd('Load Items')
       outline2.root.descendants.length.should.equal(100007)
-      console.profileEnd()
+      console.profileEnd?()
       outline2.destroy()
+    ###

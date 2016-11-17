@@ -16,12 +16,6 @@ module.exports = (args) ->
 
     applicationDelegate = args.buildDefaultApplicationDelegate()
 
-    # Force spec window to start in development mode (Fixed in Atom 1.3.0-beta6)
-    win = applicationDelegate.getCurrentWindow()
-    if win.getUrl().indexOf('devMode%22%3Atrue') is -1
-      console.log 'Spec window not in devMode, redirecting...'
-      return win.loadUrl win.getUrl().replace('devMode%22%3Afalse', 'devMode%22%3Atrue')
-
     # Create element for mocha reporter
     element = document.createElement 'div'
     element.id = 'mocha'

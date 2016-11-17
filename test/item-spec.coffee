@@ -14,6 +14,32 @@ describe 'Item', ->
     outline.destroy()
     Outline.outlines.length.should.equal(0)
 
+  it 'should have content id', ->
+    one.contentID.should.not.be.null
+
+  it 'should change content id when body string changes', ->
+    id = one.contentID
+    one.bodyString = 'moose'
+    one.contentID.should.not.equal(id)
+
+  it 'should change branch content id when body string changes', ->
+    id = one.branchContentID
+    one.bodyString = 'moose'
+    one.branchContentID.should.not.equal(id)
+
+  it 'should change branch content id when any descendent changes', ->
+    id = one.branchContentID
+    three.bodyString = 'moose'
+    one.branchContentID.should.not.equal(id)
+
+    id = one.branchContentID
+    three.removeFromParent()
+    one.branchContentID.should.not.equal(id)
+
+    id = one.branchContentID
+    four.appendChildren(outline.createItem('moose'))
+    one.branchContentID.should.not.equal(id)
+
   it 'should get parent', ->
     two.parent.should.equal(one)
     one.parent.should.equal(root)

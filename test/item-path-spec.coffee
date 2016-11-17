@@ -1,4 +1,5 @@
 loadOutlineFixture = require './load-outline-fixture'
+ItemSerializer = require '../src/item-serializer'
 DateTime = require '../src/date-time'
 ItemPath = require '../src/item-path'
 Outline = require '../src/outline'
@@ -197,12 +198,17 @@ describe 'ItemPath', ->
       it 'should consider attributes with values', ->
         outline.evaluateItemPath('//@t = 23').should.eql [six]
 
+      it 'should make non -data attributes take precidence over -data attributes', ->
+        six.setAttribute('t', '10')
+        outline.evaluateItemPath('//@t = 23').should.eql []
+        outline.evaluateItemPath('//@t = 10').should.eql [six]
+
       it 'should not throw exception when value is empty', ->
         outline.evaluateItemPath('//""').should.eql [one, two, three, four, five, six]
 
     describe 'Relations', ->
       beforeEach ->
-        three.setAttribute('t', '09')
+        three.setAttribute('m', '09')
 
       it 'should support =', ->
         outline.evaluateItemPath('//= one').should.eql [one]
@@ -276,11 +282,11 @@ describe 'ItemPath', ->
         outline.evaluateItemPath('@text matches[n] 1.0').should.eql([])
 
       it 'should support convert to date before compare option', ->
-        one.bodyString = 'November 1, 2012'
+        one.bodyString = '2012-11-01'
         one.setAttribute('data-due', 'tomorrow 2pm')
-        outline.evaluateItemPath('@text = November 1, 2012').should.eql([one])
-        outline.evaluateItemPath('@text = November 01, 2012').should.eql([])
-        outline.evaluateItemPath('@text = [d] November 01, 2012').should.eql([one])
+        outline.evaluateItemPath('@text = 2012-11-01').should.eql([one])
+        outline.evaluateItemPath('@text = 2012-11-1').should.eql([])
+        outline.evaluateItemPath('@text = [d] 2012-11-1').should.eql([one])
         outline.evaluateItemPath('@due = [d] tomorrow 2pm +1s -1s').should.eql([one])
         outline.evaluateItemPath('@due = [d] today 2pm +1d +1s -1s').should.eql([one])
         outline.evaluateItemPath('@due = [d] tomorrow 2pm + 1s').should.eql([])
@@ -412,6 +418,22 @@ describe 'ItemPath', ->
   describe 'Reported Error Cases', ->
     it 'should return empty array when evaluating bad node path', ->
       outline.evaluateItemPath('/////union').should.eql []
+
+  describe 'Performance', ->
+    it 'should perform union and except efficiently', ->
+      buildBranch = (parent, depth, breadth) ->
+        children = []
+        for i in [0..breadth]
+          each = outline.createItem('hello')
+          children.push(each)
+          if depth > 0
+            if depth is 2
+              each.setAttribute('data-done', true)
+            buildBranch(each, depth - 1, breadth)
+        parent.appendChildren(children)
+      buildBranch(outline.root, 4, 4)
+      # Potentially expsensive query
+      outline.evaluateItemPath("not @done except @done//*").length.should.equal(36)
 
   describe 'To String', ->
 
