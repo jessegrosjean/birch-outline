@@ -9,7 +9,7 @@ cd birch-outline
 npm install
 ```
 
-The [documented API](./api.md) is relatively stable. Read read the [Contributing](./contributing.md) guide to make improvements.
+The [documented API](./api) is relatively stable. Read read the [Contributing](./contributing.md) guide to make improvements.
 
 ## Node
 
